@@ -18,7 +18,7 @@ class CreateQuestionsTable extends Migration
             $table->unsignedBigInteger('quiz_id')->index();
             $table->text('question');
             $table->json('options');
-            $table->unsignedInteger('answer');
+            $table->string('answer', 5);
             $table->timestamps();
         });
     }

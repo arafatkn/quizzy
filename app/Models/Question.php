@@ -9,6 +9,10 @@ class Question extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'options' => 'object',
+    ];
+
     // Relations
 
     /**
