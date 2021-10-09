@@ -13,7 +13,7 @@ class CreateQuizzesTable extends Migration
      */
     public function up()
     {
-        Schema::table('quizzes', function (Blueprint $table) {
+        Schema::create('quizzes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('author_id')->index();
             $table->string('name');
@@ -31,8 +31,6 @@ class CreateQuizzesTable extends Migration
      */
     public function down()
     {
-        Schema::table('quizzes', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('quizzes');
     }
 }
