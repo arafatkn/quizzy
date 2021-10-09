@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,5 +26,46 @@ class Quiz extends Model
     public function questions()
     {
         return $this->hasMany(Question::class);
+    }
+
+    // Scopes
+
+    /**
+     * Filter only public quizzes
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopePublic(Builder $query): Builder
+    {
+        return $query->where('status', 1);
+    }
+
+    /**
+     * Filter only specific author's quizzes
+     *
+     * @param Builder $query
+     * @param User|integer $author
+     * @return Builder
+     */
+    public function scopeOfAuthor(Builder $query, $author): Builder
+    {
+        if($author instanceof User) {
+            $author = $author->id;
+        }
+
+        return $query->where('author_id', $author);
+    }
+
+    /**
+     * Filter only specific matched quizzes
+     *
+     * @param Builder $query
+     * @param string $search
+     * @return Builder
+     */
+    public function scopeSearchBy(Builder $query, string $search): Builder
+    {
+        return $query->where('name', 'like', '%'.$search.'%');
     }
 }
