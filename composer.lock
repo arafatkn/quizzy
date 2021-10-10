@@ -4,8 +4,65 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9be6d5f25657f3197250ff758b6e6c23",
+    "content-hash": "44d19dcf7d63f8d3ee0909a66c6a9c88",
     "packages": [
+        {
+            "name": "arafatkn/laravel-settings",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/arafatkn/laravel-settings.git",
+                "reference": "2aa6a088e3b8fd6f10135119984d35b050873129"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/arafatkn/laravel-settings/zipball/2aa6a088e3b8fd6f10135119984d35b050873129",
+                "reference": "2aa6a088e3b8fd6f10135119984d35b050873129",
+                "shasum": ""
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.0",
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "package",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Arafatkn\\LaravelSettings\\SettingServiceProvider"
+                    ],
+                    "aliases": {
+                        "Setting": "Arafatkn\\LaravelSettings\\Facades\\Setting"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Arafatkn\\LaravelSettings\\": "src/",
+                    "Arafatkn\\LaravelSettings\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Arafat Islam",
+                    "email": "arafatkn@gmail.com"
+                }
+            ],
+            "description": "A laravel package for managing project settings.",
+            "keywords": [
+                "Settings",
+                "laravel settings",
+                "setting"
+            ],
+            "support": {
+                "issues": "https://github.com/arafatkn/laravel-settings/issues",
+                "source": "https://github.com/arafatkn/laravel-settings/tree/0.1.0"
+            },
+            "time": "2021-10-03T09:58:43+00:00"
+        },
         {
             "name": "asm89/stack-cors",
             "version": "v2.0.3",
