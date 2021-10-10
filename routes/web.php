@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PageController::class, 'index'])->name('index');
 
+Route::get('/pages/{page}', [PageController::class, 'show'])->name('pages.show');
+
 Route::group(
     ['prefix' => 'auth', 'as' => 'auth.', 'middleware' => 'guest'],
     function () {

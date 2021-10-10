@@ -39,12 +39,17 @@ class AuthController extends Controller
      * Handle Login form submisison
      *
      * @param  LoginRequest  $request
-     * @return JsonResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function loginPost(LoginRequest $request): JsonResponse
+    public function loginPost(LoginRequest $request)
     {
+        /*$request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);*/
+
         if (!auth()->attempt($request->only(['email', 'password']), $request->remember)) {
-            return response()->json(['message' => 'Email or Password is incorrect'], 401);
+            return back()->withErrors('Email or Password is incorrect');
         }
 
         $user = auth()->user();
@@ -55,11 +60,7 @@ class AuthController extends Controller
             $url = route('user.index');
         }
 
-        return response()->json([
-            'message' => 'You have been logged in successfully.',
-            'user' => $user,
-            'redir' => $url,
-        ], 200);
+        return redirect($url)->withSuccess('You have been logged in successfully.');
     }
 
     public function registerPost(RegistrationRequest $request)
@@ -67,11 +68,10 @@ class AuthController extends Controller
         $user = new User();
         $user->fill($request->validated());
         $user->password = bcrypt($request->password);
-        $user->status = 1;
         $user->role = 'user';
 
         if (!$user->save()) {
-            return response()->json(['message' => 'Something is wrong. Please try again.'], 501);
+            return back()->withErrors('Something is wrong. Please try again.');
         }
 
         auth()->login($user, true);
@@ -82,11 +82,7 @@ class AuthController extends Controller
             $url = route('user.index');
         }
 
-        return response()->json([
-            'message' => 'You have been registered successfully...',
-            'user' => $user,
-            'redir' => $url,
-        ], 200);
+        return redirect($url)->withSuccess('You have been registered successfully...');
     }
 
     public function resetPasswordPost(Request $request)

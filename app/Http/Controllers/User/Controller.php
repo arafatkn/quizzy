@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use App\Helpers\BSForm;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -20,7 +20,7 @@ class Controller extends BaseController
      */
     protected $data = [];
 
-    protected $view = "public.", $route = "";
+    protected $view = "user.", $route = "user.";
 
     /**
      * Store public storage object
