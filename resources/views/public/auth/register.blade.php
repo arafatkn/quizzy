@@ -59,6 +59,9 @@
                                 <a href="{{ route('auth.login') }}" class="btn btn-lg btn-secondary">I already have an account.</a>
                             </div>
 
+                            <div class="text-center">
+                                <a href="{{ route('index') }}" role="button" class="btn btn-link mt-2">Back to Home</a>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
-@extends('public.layouts.master')
+@extends('user.layouts.master')
 
-@section('title', 'Quizzy - Interactive Online Quiz System')
+@section('title', 'Dashboard')
 
 @section('content')
 
@@ -25,11 +25,6 @@
                 </table>
             </div>
         </div>
-        @guest
-        <div class="card-footer text-center">
-            You must <a href="{{ route('auth.login') }}">login</a> or <a href="{{ route('auth.register') }}">create an account</a> to participate in quiz test.
-        </div>
-        @endguest
     </div>
 
 @endsection

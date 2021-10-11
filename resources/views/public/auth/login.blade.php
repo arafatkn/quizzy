@@ -49,6 +49,9 @@
                                 <a href="{{ route('auth.register') }}" class="btn btn-lg btn-secondary">Create a new account</a>
                             </div>
 
+                            <div class="text-center">
+                                <a href="{{ route('index') }}" role="button" class="btn btn-link mt-2">Back to Home</a>
+                            </div>
                         </div>
                     </div>
                 </div>

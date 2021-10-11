@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\User\PageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -11,4 +12,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\PageController::class, 'index'])->name('index');
+Route::get('/', [PageController::class, 'index'])->name('index');

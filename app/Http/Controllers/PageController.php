@@ -12,6 +12,8 @@ class PageController extends Controller
      */
     public function index(Request $request)
     {
+        $this->header();
+
         $quizzes = Quiz::public();
 
         if($request->has('search')) {

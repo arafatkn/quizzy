@@ -35,4 +35,4 @@ Route::group(
     }
 );
 
-Route::get('/auth/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
+Route::get('/auth/logout', [AuthController::class, 'logout'])->middleware('auth')->name('auth.logout');

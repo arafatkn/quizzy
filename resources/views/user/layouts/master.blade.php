@@ -13,11 +13,18 @@
 
 @include('public.layouts.master.header')
 
-<div class="container mt-3 mt-lg-5">
-    @yield('content')
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            @include('user.layouts.master.header')
+        </div>
+        <div class="col py-3">
+            @yield('content')
+        </div>
+    </div>
 </div>
 
-@include('public.layouts.master.footer')
+{{--@include('user.layouts.master.footer')--}}
 
 <!-- Bootstrap Bundle with Popper -->
 <script src="{{ mix('js/app.js') }}" type="text/javascript"></script>

@@ -59,9 +59,7 @@ class Controller extends BaseController
 
     public function header()
     {
-        if (Auth::check()) {
-            $this->user = Auth::user();
-        }
+        $this->user = Auth::user();
     }
 
     public function view($file = "index")

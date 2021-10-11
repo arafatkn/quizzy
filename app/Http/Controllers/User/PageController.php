@@ -12,7 +12,7 @@ class PageController extends Controller
      */
     public function index(Request $request)
     {
-        return dd(auth()->user());
+        $this->header();
 
         $quizzes = Quiz::public();
 
