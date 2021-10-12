@@ -24,7 +24,7 @@ class QuizFactory extends Factory
     {
         return [
             'author_id' => User::inRandomOrder()->first()->id ?? 1,
-            'name' => $this->faker->name(),
+            'name' => $this->faker->text(30),
             'time_limit' => $this->faker->randomElement([600, 1200, 1800, 2400, 3000, 3600]),
             'author_digest' => $this->faker->boolean(70),
             'status' => $this->faker->boolean(),

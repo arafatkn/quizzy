@@ -14,13 +14,7 @@ class PageController extends Controller
     {
         $this->header();
 
-        $quizzes = Quiz::public();
-
-        if($request->has('search')) {
-            $quizzes = $quizzes->searchBy($request->search);
-        }
-
-        $this->data['quizzes'] = $quizzes->latest()->paginate();
+        $this->data['quizzes'] = Quiz::public()->latest()->take(20)->get();
 
         return $this->view('index');
     }
