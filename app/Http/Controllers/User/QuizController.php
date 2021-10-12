@@ -52,4 +52,15 @@ class QuizController extends Controller
 
         return $this->view('my_quizzes');
     }
+
+    /**
+     * Route = /user/quizzes/create
+     * Add new Quiz
+     */
+    public function create()
+    {
+        $this->header();
+
+        return $this->view('create');
+    }
 }

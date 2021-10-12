@@ -10,6 +10,12 @@ class Quiz extends Model
 {
     use HasFactory;
 
+    // Custom Attribute
+    public function getMarksPerQuestionAttribute()
+    {
+        return $this->total_marks / $this->total_questions;
+    }
+
     // Relations
 
     /**

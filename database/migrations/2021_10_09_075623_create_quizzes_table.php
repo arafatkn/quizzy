@@ -20,6 +20,10 @@ class CreateQuizzesTable extends Migration
             $table->unsignedInteger('time_limit');
             $table->boolean('author_digest');
             $table->boolean('status');
+            $table->unsignedInteger('total_questions');
+            // User can add unlimited questions but only the mentioned number of questions will be shown randomly
+            // to the examinees.
+            $table->unsignedInteger('total_marks');
             $table->timestamps();
         });
     }

@@ -31,9 +31,8 @@
                                     <input
                                         class="form-check-input"
                                         type="checkbox"
-                                        value=""
-                                        id="remember"
                                         name="remember"
+                                        value="1"
                                     />
                                     <label class="form-check-label" for="form1Example3"> Remember password </label>
                                 </div>

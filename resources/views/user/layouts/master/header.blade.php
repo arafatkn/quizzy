@@ -4,9 +4,13 @@
     </a>--}}
     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
         <li class="nav-item">
-            <a href="#" class="nav-link align-middle px-0">
+            <a href="{{ route('user.index') }}" class="nav-link align-middle px-0">
                 <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
             </a>
+        </li>
+        <li>
+            <a href="{{ route('user.quizzes.create') }}" class="nav-link px-0 align-middle">
+                <i class="fs-4 bi-plus-circle"></i> <span class="ms-1 d-none d-sm-inline">Add New Quiz</span></a>
         </li>
         <li>
             <a href="{{ route('user.quizzes.index') }}" class="nav-link px-0 align-middle">
@@ -14,11 +18,11 @@
         </li>
         <li>
             <a href="{{ route('user.my_quizzes') }}" class="nav-link px-0 align-middle">
-                <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">My Quizzes</span> </a>
+                <i class="fs-4 bi-person"></i> <span class="ms-1 d-none d-sm-inline">My Quizzes</span> </a>
         </li>
         <li>
             <a href="{{ route('user.quizzes.index') }}" class="nav-link px-0 align-middle">
-                <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">My Attempts</span> </a>
+                <i class="fs-4 bi-hand-index"></i> <span class="ms-1 d-none d-sm-inline">My Attempts</span> </a>
         </li>
     </ul>
 </div>
