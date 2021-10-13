@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Http\Requests\QuizStoreRequest;
 use App\Models\Quiz;
 use Illuminate\Http\Request;
 
@@ -14,6 +15,7 @@ class QuizController extends Controller
     }
 
     /**
+     * All available quiz list.
      * Route = /user/quizzes
      */
     public function index(Request $request)
@@ -36,6 +38,7 @@ class QuizController extends Controller
     }
 
     /**
+     * Quizzes created by current logged-in users.
      * Route = /user/my-quizzes
      */
     public function myQuizzes(Request $request)
@@ -54,13 +57,24 @@ class QuizController extends Controller
     }
 
     /**
+     * Add New Quiz Page
      * Route = /user/quizzes/create
-     * Add new Quiz
      */
     public function create()
     {
         $this->header();
 
         return $this->view('create');
+    }
+
+    /**
+     * Store quiz in database.
+     * Route = /user
+     * Method = POST
+     */
+    public function store(QuizStoreRequest $request)
+    {
+        
+
     }
 }

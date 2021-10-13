@@ -229,6 +229,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        'BSForm' => App\Helpers\BSForm::class,
+
     ],
 
 ];

@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 class BSForm
 {
-    public function show($method, $action, $data, $submit = [])
+    public static function show($method, $action, $data, $submit = [])
     {
         echo '<form method="'.$method.'"';
         if (!empty($action) || strlen($action) > 0) {
@@ -14,7 +14,7 @@ class BSForm
         foreach ($data as $arr) {
             $fn = $arr[0];
             unset($arr[0]);
-            $this->$fn($arr);
+            self::$fn($arr);
         }
         echo '<button type="submit" class="btn ';
         if (isset($submit["class"])) {
@@ -36,9 +36,9 @@ class BSForm
         echo '</form>';
     }
 
-    public function open($method, $action = '', $data = [])
+    public static function open($method, $action = '', $data = []): string
     {
-        $str = '<form action="'.$action.'" method="'.($method=='PUT'?'POST':$method).'" '.$this->printAttr($data).'>';
+        $str = '<form action="'.$action.'" method="'.($method=='PUT'?'POST':$method).'" '.self::printAttr($data).'>';
         $str .= '<input type="hidden" name="_token" value="'.csrf_token().'">';
         if ($method == 'PUT') {
             $str .= '<input type="hidden" name="_method" value="PUT">';
@@ -46,18 +46,16 @@ class BSForm
         return $str;
     }
 
-    public function close($submit, $text = 'Submit', $class = 'btn btn-success', $data = [])
+    public static function close($submit, $text = 'Submit', $class = 'btn btn-success', $data = []): string
     {
         if (!$submit) {
             return '</form>';
         }
 
-        $str = $this->submit($text, $class, $data).'</form>';
-
-        return $str;
+        return self::submit($text, $class, $data).'</form>';
     }
 
-    public function printAttr($data)
+    public static function printAttr($data)
     {
         $str = '';
         foreach ($data as $k => $v) {
@@ -66,11 +64,11 @@ class BSForm
         return $str;
     }
 
-    public function multiInput($datas)
+    public static function multiInput($datas)
     {
         $str = '';
         foreach ($datas as $data) {
-            $str .= $this->input(
+            $str .= self::input(
                 $data[0],
                 $data[1],
                 isset($data[2]) ? $data[2] : '',
@@ -81,7 +79,7 @@ class BSForm
         return $str;
     }
 
-    public function multi($datas)
+    public static function multi($datas)
     {
         $str = '';
         foreach ($datas as $data) {
@@ -94,19 +92,19 @@ class BSForm
                     break;
 
                 case 3:
-                    $str .= $this->$func($data[1], $data[2]);
+                    $str .= self::$func($data[1], $data[2]);
                     break;
 
                 case 4:
-                    $str .= $this->$func($data[1], $data[2], $data[3]);
+                    $str .= self::$func($data[1], $data[2], $data[3]);
                     break;
 
                 case 5:
-                    $str .= $this->$func($data[1], $data[2], $data[3], $data[4]);
+                    $str .= self::$func($data[1], $data[2], $data[3], $data[4]);
                     break;
 
                 default:
-                    $str .= $this->$func($data[1], $data[2], $data[3], $data[4], $data[5]);
+                    $str .= self::$func($data[1], $data[2], $data[3], $data[4], $data[5]);
                     break;
             }
         }
@@ -114,11 +112,11 @@ class BSForm
         return $str;
     }
 
-    public function multiText($datas)
+    public static function multiText($datas)
     {
         $str = '';
         foreach ($datas as $data) {
-            $str .= $this->input(
+            $str .= self::input(
                 'text',
                 $data[0],
                 isset($data[1]) ? $data[1] : '',
@@ -129,19 +127,16 @@ class BSForm
         return $str;
     }
 
-    public function input($type, $name, $label = '', $value = '', $data = [])
+    public static function input($type, $name, $label = '', $value = '', $data = []): string
     {
         $str = '
-        <div class="form-group">';
+        <div class="mb-3">';
 
         if (!empty($label)) {
-            $str .= '<label for="'.$type.'">'.$label.':</label>';
+            $str .= '<label for="'.$type.'" class="form-label">'.$label.':</label>';
         }
 
-        $str .= '<input type="'.$type.'" class="form-control" name="'.$name.'" value="'.old(
-                $name,
-                $value
-            ).'" '.$this->printAttr($data).'>';
+        $str .= '<input type="'.$type.'" class="form-control" name="'.$name.'" value="'.old($name, $value).'" '.self::printAttr($data).'>';
         if ($type == "file") {
             $str .= '<img src="'.$value.'"/>';
         }
@@ -149,16 +144,16 @@ class BSForm
         return $str;
     }
 
-    public function select($name, $options, $label = '', $value = '', $data = [])
+    public static function select($name, $options, $label = '', $value = '', $data = []): string
     {
         $str = '
-        <div class="form-group">';
+        <div class="mb-3">';
 
         if (!empty($label)) {
-            $str .= '<label for="select">'.$label.':</label>';
+            $str .= '<label for="select" class="form-label">'.$label.':</label>';
         }
 
-        $str .= '<select class="form-control" name="'.$name.'" '.$this->printAttr($data).'>';
+        $str .= '<select class="form-control" name="'.$name.'" '.self::printAttr($data).'>';
         foreach ($options as $k => $v) {
             $str .= '<option value="'.$k.'"'.($k == old($name, $value) ? ' selected' : '').'>'.$v.'</option>';
         }
@@ -168,7 +163,7 @@ class BSForm
         return $str;
     }
 
-    public function selectM($name, $options, $label = '', $value = [], $data = [])
+    public static function selectM($name, $options, $label = '', $value = [], $data = [])
     {
         $str = '
         <div class="form-group">';
@@ -177,7 +172,7 @@ class BSForm
             $str .= '<label for="select">'.$label.':</label>';
         }
 
-        $str   .= '<select class="form-control" multiple="true" name="'.$name.'[]" '.$this->printAttr($data).'>';
+        $str   .= '<select class="form-control" multiple="true" name="'.$name.'[]" '.self::printAttr($data).'>';
         $value = old($name, $value);
         foreach ($options as $k => $v) {
             $str .= '<option value="'.$k.'"'.(in_array($k, $value) ? ' selected' : '').'>'.$v.'</option>';
@@ -188,7 +183,7 @@ class BSForm
         return $str;
     }
 
-    public function textarea($name, $label = '', $value = '', $data = [])
+    public static function textarea($name, $label = '', $value = '', $data = [])
     {
         $str = '
         <div class="form-group">';
@@ -197,69 +192,67 @@ class BSForm
             $str .= '<label for="textarea">'.$label.':</label>';
         }
 
-        $str .= '<textarea class="form-control" name="'.$name.'" '.$this->printAttr($data).'>'.old($name, $value).'</textarea>
+        $str .= '<textarea class="form-control" name="'.$name.'" '.self::printAttr($data).'>'.old($name, $value).'</textarea>
         </div>';
         return $str;
     }
 
     // Input Types
 
-    public function text($name, $label = '', $value = '', $data = [])
+    public static function text($name, $label = '', $value = '', $data = [])
     {
-        return $this->input('text', $name, $label, $value, $data);
+        return self::input('text', $name, $label, $value, $data);
     }
 
-    public function password($name, $label = '', $value = '', $data = [])
+    public static function password($name, $label = '', $value = '', $data = [])
     {
-        return $this->input('password', $name, $label, $value, $data);
+        return self::input('password', $name, $label, $value, $data);
     }
 
-    public function email($name, $label = '', $value = '', $data = [])
+    public static function email($name, $label = '', $value = '', $data = [])
     {
-        return $this->input('email', $name, $label, $value, $data);
+        return self::input('email', $name, $label, $value, $data);
     }
 
-    public function number($name, $label = '', $value = '', $data = [])
+    public static function number($name, $label = '', $value = '', $data = [])
     {
-        return $this->input('number', $name, $label, $value, $data);
+        return self::input('number', $name, $label, $value, $data);
     }
 
-    public function date($name, $label = '', $value = '', $data = [])
+    public static function date($name, $label = '', $value = '', $data = [])
     {
-        return $this->input('date', $name, $label, $value, $data);
+        return self::input('date', $name, $label, $value, $data);
     }
 
-    public function datetime_local($name, $label = '', $value = '', $data = [])
+    public static function datetime_local($name, $label = '', $value = '', $data = [])
     {
-        return $this->input('datetime-local', $name, $label, $value, $data);
+        return self::input('datetime-local', $name, $label, $value, $data);
     }
 
-    public function range($name, $label = '', $value = '', $data = [])
+    public static function range($name, $label = '', $value = '', $data = [])
     {
-        return $this->input('range', $name, $label, $value, $data);
+        return self::input('range', $name, $label, $value, $data);
     }
 
-    public function file($name, $label = '', $value = '', $data = [])
+    public static function file($name, $label = '', $value = '', $data = [])
     {
-        return $this->input('file', $name, $label, $value, $data);
+        return self::input('file', $name, $label, $value, $data);
     }
 
-    public function checkbox($name, $label = '', $value = '', $data = [])
+    public static function checkbox($name, $label = '', $value = '', $data = []): string
     {
         $checked = old($name, $value) ? "checked" : "";
-        $str     = '
-        <div class="form-group form-check">
-            <label for="checkbox" class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="'.$name.'" '.$checked.' '.$this->printAttr($data).'> '.$label.'
-            </label>
+        return '
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" name="'.$name.'" '.$checked.' '.self::printAttr($data).'>
+            <label for="checkbox" class="form-check-label">'.$label.'</label>
         </div>';
-        return $str;
     }
 
     // Submit
 
-    public function submit($text, $class = 'btn btn-success', $data = [])
+    public static function submit($text, $class = 'btn btn-success', $data = []): string
     {
-        return '<button class="'.$class.'" '.$this->printAttr($data).'>'.$text.'</button>';
+        return '<button type="submit" class="'.$class.'" '.self::printAttr($data).'>'.$text.'</button>';
     }
 }

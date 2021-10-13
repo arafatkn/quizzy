@@ -5113,6 +5113,11 @@ function within(min, value, max) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+document.querySelector("label[for='checkbox']").onclick = function (e) {
+  var el = e.target.parentElement.querySelector('input');
+  el.checked = !el.checked;
+};
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
