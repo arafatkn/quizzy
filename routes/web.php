@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [PageController::class, 'index'])->name('index');
+
+Route::get('/pages/{page}', [PageController::class, 'show'])->name('pages.show');
+
+Route::group(
+    ['prefix' => 'auth', 'as' => 'auth.', 'middleware' => 'guest'],
+    function () {
+
+        Route::get('/login', [AuthController::class, 'login'])->name('login');
+        Route::get('/register', [AuthController::class, 'register'])->name('register');
+        Route::get('/lostpass', [AuthController::class, 'lostPassword'])->name('lostpass');
+        Route::post('/resetpass', [AuthController::class, 'resetPassword'])->name('resetpass');
+
+        Route::post('/login', [AuthController::class, 'loginPost']);
+        Route::post('/register', [AuthController::class, 'registerPost']);
+        Route::post('/lostpass', [AuthController::class, 'lostPasswordPost']);
+        Route::post('/resetpass', [AuthController::class, 'resetPasswordPost']);
+    }
+);
+
+Route::get('/auth/logout', [AuthController::class, 'logout'])->middleware('auth')->name('auth.logout');
