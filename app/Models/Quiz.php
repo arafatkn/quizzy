@@ -16,6 +16,14 @@ class Quiz extends Model
         return $this->total_marks / $this->total_questions;
     }
 
+    // Override
+    public function delete()
+    {
+        $this->questions()->delete();
+        // $this->attempts()->delete();
+        parent::delete();
+    }
+
     // Relations
 
     /**

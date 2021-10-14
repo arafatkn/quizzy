@@ -103,7 +103,7 @@ class QuizController extends Controller
     /**
      * Update quiz in database.
      * Route = /user/quizzes/{quiz}
-     * Method = POST
+     * Method = PUT / PATCH
      */
     public function update(Quiz $quiz, QuizStoreRequest $request)
     {
@@ -111,6 +111,21 @@ class QuizController extends Controller
 
         if ($quiz->save()) {
             return back()->withSuccess('Quiz has been updated successfully.');
+        }
+
+        return back()->withErrors('Something is wrong here... Please try again later.');
+    }
+
+    /**
+     * Delete Quiz from Database
+     * Route = /user/quizzes/{quiz}
+     * Method = DELETE
+     */
+    public function delete(Quiz $quiz)
+    {
+        // Delete Quiz and It's questions & attempts
+        if ($quiz->delete()) {
+            return redirect()->route('user.my_quizzes')->withSuccess('Quiz has been deleted successfully.');
         }
 
         return back()->withErrors('Something is wrong here... Please try again later.');
