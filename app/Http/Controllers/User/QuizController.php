@@ -24,11 +24,11 @@ class QuizController extends Controller
 
         $quizzes = Quiz::public()->with(['author']);
 
-        if($request->has('search')) {
+        if ($request->has('search')) {
             $quizzes = $quizzes->searchBy($request->search);
         }
 
-        if($request->has('author_id')) {
+        if ($request->has('author_id')) {
             $quizzes = $quizzes->ofAuthor($request->author_id);
         }
 
@@ -47,7 +47,7 @@ class QuizController extends Controller
 
         $quizzes = Quiz::ofAuthor($this->user->id);
 
-        if($request->has('search')) {
+        if ($request->has('search')) {
             $quizzes = $quizzes->searchBy($request->search);
         }
 
@@ -74,7 +74,14 @@ class QuizController extends Controller
      */
     public function store(QuizStoreRequest $request)
     {
-        
+        $quiz = new Quiz();
 
+        $quiz->fill($request->only(['name', 'status', 'time_limit', 'total_marks', 'total_questions']));
+
+        if ($quiz->save()) {
+            return redirect()->route('user.quizzes.show', $quiz->id)->withSuccess('Quiz has been created successfully. Add Questions now.');
+        }
+
+        return back()->withErrors('Something is wrong here... Please try again later.');
     }
 }
