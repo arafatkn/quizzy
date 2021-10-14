@@ -69,7 +69,7 @@ class QuizController extends Controller
 
     /**
      * Store quiz in database.
-     * Route = /user
+     * Route = /user/quizzes
      * Method = POST
      */
     public function store(QuizStoreRequest $request)
@@ -78,8 +78,39 @@ class QuizController extends Controller
 
         $quiz->fill($request->only(['name', 'status', 'time_limit', 'total_marks', 'total_questions']));
 
+        $quiz->author_id = auth()->user()->id;
+
         if ($quiz->save()) {
             return redirect()->route('user.quizzes.show', $quiz->id)->withSuccess('Quiz has been created successfully. Add Questions now.');
+        }
+
+        return back()->withErrors('Something is wrong here... Please try again later.');
+    }
+
+    /**
+     * Edit Quiz Page
+     * Route = /user/quizzes/{quiz}/edit
+     */
+    public function edit(Quiz $quiz)
+    {
+        $this->header();
+
+        $this->data['quiz'] = $quiz;
+
+        return $this->view('edit');
+    }
+
+    /**
+     * Update quiz in database.
+     * Route = /user/quizzes/{quiz}
+     * Method = POST
+     */
+    public function update(Quiz $quiz, QuizStoreRequest $request)
+    {
+        $quiz->fill($request->only(['name', 'status', 'time_limit', 'total_marks', 'total_questions']));
+
+        if ($quiz->save()) {
+            return back()->withSuccess('Quiz has been updated successfully.');
         }
 
         return back()->withErrors('Something is wrong here... Please try again later.');
