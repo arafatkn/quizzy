@@ -10,10 +10,22 @@ class Quiz extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id', 'author_id'];
+
     // Custom Attribute
     public function getMarksPerQuestionAttribute()
     {
         return $this->total_marks / $this->total_questions;
+    }
+
+    public function getAuthorDigestAsTextAttribute()
+    {
+        return $this->author_digest ? 'On' : 'Off';
+    }
+
+    public function getStatusAsTextAttribute()
+    {
+        return $this->status ? 'Public' : 'Hidden';
     }
 
     // Override
@@ -21,7 +33,7 @@ class Quiz extends Model
     {
         $this->questions()->delete();
         // $this->attempts()->delete();
-        parent::delete();
+        return parent::delete();
     }
 
     // Relations

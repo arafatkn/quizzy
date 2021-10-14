@@ -23,12 +23,17 @@
                     <tbody>
                     @foreach($quizzes as $quiz)
                         <tr>
-                            <td>{{ $quiz->name }}</td>
-                            <td>{{ $quiz->status }}</td>
+                            <td>
+                                <a href="{{ route('user.quizzes.show', $quiz->id) }}">{{ $quiz->name }}</a>
+                            </td>
+                            <td>{{ $quiz->status_as_text }}</td>
                             <td>{{ intdiv($quiz->time_limit, 60) }} Min {{ $quiz->time_limit%60 ? ($quiz->time_limit%60).' sec' : '' }}</td>
-                            <td>{{ $quiz->author_digest }}</td>
+                            <td>{{ $quiz->author_digest_as_text }}</td>
                             <td class="text-end">
-                                <a href="{{ route('user.index') }}" role="button" class="btn btn-secondary">Start Test</a>
+                                <div class="btn-group" role="group">
+                                    <a href="{{ route('user.quizzes.edit', $quiz->id) }}" role="button" class="btn btn-warning">Edit</a>
+                                    <button onclick="gdConfirm('{{ route('user.quizzes.destroy', $quiz->id) }}')" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#GDModal">Delete</button>
+                                </div>
                             </td>
                         </tr>
                     @endforeach

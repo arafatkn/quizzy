@@ -6,7 +6,9 @@ try {
     window.Popper = Popper;
 
     require('bootstrap');
-} catch (e) {}
+} catch (e) {
+    console.log(e);
+}
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

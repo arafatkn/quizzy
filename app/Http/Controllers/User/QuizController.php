@@ -38,6 +38,19 @@ class QuizController extends Controller
     }
 
     /**
+     * Show a quiz details.
+     * Route = /user/quizzes/{quiz}
+     */
+    public function show(Quiz $quiz)
+    {
+        $this->header();
+
+        $this->data['quiz'] = $quiz;
+
+        return $this->view('show');
+    }
+
+    /**
      * Quizzes created by current logged-in users.
      * Route = /user/my-quizzes
      */
@@ -76,8 +89,8 @@ class QuizController extends Controller
     {
         $quiz = new Quiz();
 
-        $quiz->fill($request->only(['name', 'status', 'time_limit', 'total_marks', 'total_questions']));
-
+        $quiz->fill($request->only(['name', 'status', 'time_limit', 'total_marks', 'total_questions', 'author_digest']));
+        $quiz->author_digest = $request->has('author_digest');
         $quiz->author_id = auth()->user()->id;
 
         if ($quiz->save()) {
@@ -108,6 +121,7 @@ class QuizController extends Controller
     public function update(Quiz $quiz, QuizStoreRequest $request)
     {
         $quiz->fill($request->only(['name', 'status', 'time_limit', 'total_marks', 'total_questions']));
+        $quiz->author_digest = $request->has('author_digest');
 
         if ($quiz->save()) {
             return back()->withSuccess('Quiz has been updated successfully.');
@@ -121,7 +135,7 @@ class QuizController extends Controller
      * Route = /user/quizzes/{quiz}
      * Method = DELETE
      */
-    public function delete(Quiz $quiz)
+    public function destroy(Quiz $quiz)
     {
         // Delete Quiz and It's questions & attempts
         if ($quiz->delete()) {
