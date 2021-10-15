@@ -53,6 +53,17 @@
 <!-- Bootstrap Bundle with Popper -->
 <script src="{{ mix('js/app.js') }}" type="text/javascript"></script>
 
+<script type="text/javascript">
+    function gdConfirm(url) {
+        console.log(url);
+        document.getElementById("gdForm").action = url;
+    }
+
+    function getDataById(id) {
+        return data.find(d => d.id==id);
+    }
+</script>
+
 @yield('script')
 
 </body>

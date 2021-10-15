@@ -26,7 +26,7 @@
                         <th></th>
                         <td>
                             <a href="{{ route('user.quizzes.edit', $quiz->id) }}" role="button" class="btn btn-warning">Edit</a>
-                            <button onclick="gdConfirm('{{ route('user.quizzes.edit', $quiz->id) }}')" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#GDModal">Delete</button>
+                            <button onclick="gdConfirm('{{ route('user.quizzes.destroy', $quiz->id) }}')" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#GDModal">Delete</button>
                         </td>
                     </tr>
                 </tbody>

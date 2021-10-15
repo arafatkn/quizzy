@@ -5126,31 +5126,21 @@ if (checkbox) {
   };
 }
 
-document.addEventListener("DOMContentLoaded", function (event) {// Your code to run since DOM is loaded and ready
-
-  /*$(".nav-link").each(function(){
-      if( $(this).attr('href') == location.href ||
-          $(this).attr('href') == location.href.split('?')[0] ||
-          $(this).attr('href') == location.pathname ||
-          $(this).attr('href') == location.pathname.split('?')[0]
-      ) {
-          console.log("Found");
-          $(this).addClass("active");
-          let ul = $(this).parent().parent();
-          if(ul.hasClass('nav-treeview')) {
-              ul.show();
-              ul.parent().addClass("menu-open");
-          }
-      }
-  });*/
+document.addEventListener("DOMContentLoaded", function (event) {
+  // Your code to run since DOM is loaded and ready
+  document.querySelectorAll(".nav-link").forEach(function (el) {
+    if (el.href === location.href || el.href === location.href.split('?')[0] || el.href === location.pathname || el.href === location.pathname.split('?')[0]) {
+      console.log("Found"); //el.parentElement.classList.add("active");
+      //el.parentElement.style.backgroundColor = "#6699ff";
+    }
+  });
 });
-/*function formFill(dom, data)
-{
-    dom.find('input,select,textarea').each(function(i){
-        if( $(this).attr('name') in data )
-            $(this).val( data[$(this).attr('name')] );
-    });
-}*/
+
+function formFill(dom, data) {
+  dom.querySelectorAll('input,select,textarea').forEach(function (el) {
+    if (el.name in data) el.value = data[el.name];
+  });
+}
 
 /***/ }),
 
