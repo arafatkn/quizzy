@@ -9,6 +9,8 @@ class Question extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id', 'quiz_id'];
+
     protected $casts = [
         'options' => 'object',
     ];

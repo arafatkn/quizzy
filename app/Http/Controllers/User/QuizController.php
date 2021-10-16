@@ -43,9 +43,14 @@ class QuizController extends Controller
      */
     public function show(Quiz $quiz)
     {
+        if (auth()->user()->id != $quiz->author_id) {
+            abort(404);
+        }
+
         $this->header();
 
         $this->data['quiz'] = $quiz;
+        $this->data['questions'] = $quiz->questions()->paginate();
 
         return $this->view('show');
     }
@@ -89,12 +94,15 @@ class QuizController extends Controller
     {
         $quiz = new Quiz();
 
-        $quiz->fill($request->only(['name', 'status', 'time_limit', 'total_marks', 'total_questions', 'author_digest']));
+        $quiz->fill($request->only([
+            'name', 'status', 'time_limit', 'total_marks', 'total_questions', 'author_digest'
+        ]));
         $quiz->author_digest = $request->has('author_digest');
         $quiz->author_id = auth()->user()->id;
 
         if ($quiz->save()) {
-            return redirect()->route('user.quizzes.show', $quiz->id)->withSuccess('Quiz has been created successfully. Add Questions now.');
+            return redirect()->route('user.quizzes.show',
+                $quiz->id)->withSuccess('Quiz has been created successfully. Add Questions now.');
         }
 
         return back()->withErrors('Something is wrong here... Please try again later.');
@@ -106,6 +114,10 @@ class QuizController extends Controller
      */
     public function edit(Quiz $quiz)
     {
+        if (auth()->user()->id != $quiz->author_id) {
+            abort(404);
+        }
+
         $this->header();
 
         $this->data['quiz'] = $quiz;
@@ -120,6 +132,10 @@ class QuizController extends Controller
      */
     public function update(Quiz $quiz, QuizStoreRequest $request)
     {
+        if (auth()->user()->id != $quiz->author_id) {
+            abort(404);
+        }
+
         $quiz->fill($request->only(['name', 'status', 'time_limit', 'total_marks', 'total_questions']));
         $quiz->author_digest = $request->has('author_digest');
 

@@ -166,10 +166,10 @@ class BSForm
     public static function selectM($name, $options, $label = '', $value = [], $data = [])
     {
         $str = '
-        <div class="form-group">';
+        <div class="mb-3">';
 
         if (!empty($label)) {
-            $str .= '<label for="select">'.$label.':</label>';
+            $str .= '<label class="form-label" for="select">'.$label.':</label>';
         }
 
         $str   .= '<select class="form-control" multiple="true" name="'.$name.'[]" '.self::printAttr($data).'>';
@@ -186,10 +186,10 @@ class BSForm
     public static function textarea($name, $label = '', $value = '', $data = [])
     {
         $str = '
-        <div class="form-group">';
+        <div class="mb-3">';
 
         if (!empty($label)) {
-            $str .= '<label for="textarea">'.$label.':</label>';
+            $str .= '<label for="textarea" class="form-label">'.$label.':</label>';
         }
 
         $str .= '<textarea class="form-control" name="'.$name.'" '.self::printAttr($data).'>'.old($name, $value).'</textarea>
@@ -198,6 +198,11 @@ class BSForm
     }
 
     // Input Types
+
+    public static function hidden($name, $value = ''): string
+    {
+        return "<input type=\"hidden\" name=\"$name\" value=\"$value\" />";
+    }
 
     public static function text($name, $label = '', $value = '', $data = [])
     {

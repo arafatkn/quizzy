@@ -58,9 +58,19 @@
         console.log(url);
         document.getElementById("gdForm").action = url;
     }
-
-    function getDataById(id) {
-        return data.find(d => d.id==id);
+    function formFill(dom, data) {
+        dom.querySelectorAll('input,select,textarea').forEach(function(el){
+            console.log(el.name)
+            if(el.name.includes('[')) {
+                let [ first, second ] = el.name.split('[');
+                second = second.slice(0, -1);
+                if(first in data && second in data[first]) {
+                    el.value = data[ first ] [ second ];
+                }
+            } else if( el.name in data ) {
+                el.value = data[ el.name ];
+            }
+        });
     }
 </script>
 
