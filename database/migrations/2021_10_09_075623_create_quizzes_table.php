@@ -18,7 +18,7 @@ class CreateQuizzesTable extends Migration
             $table->unsignedBigInteger('author_id')->index();
             $table->string('name');
             $table->unsignedInteger('time_limit');
-            $table->boolean('author_digest');
+            $table->boolean('author_digest')->default(false);
             $table->boolean('status');
             $table->unsignedInteger('total_questions');
             // User can add unlimited questions but only the mentioned number of questions will be shown randomly

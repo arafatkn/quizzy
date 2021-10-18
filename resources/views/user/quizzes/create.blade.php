@@ -18,7 +18,7 @@
                     ['select', 'status', ['Private', 'Available'], 'Status', 1],
                     ['number', 'total_questions', 'Total Questions'],
                     ['number', 'total_marks', 'Total Marks'],
-                    ['checkbox', 'author_digest', 'Receive Daily Updates of Attempts on this Quiz'],
+                    ['checkbox', 'author_digest', 'Receive Daily Updates of Attempts on this Quiz', ],
                 ]) !!}
 
             {!! BSForm::close(true, 'Add New Quiz') !!}

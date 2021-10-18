@@ -10,7 +10,7 @@
         </div>
         <div class="card-body">
 
-            {!! BSForm::open('POST', route('user.quizzes.update', $quiz->id)) !!}
+            {!! BSForm::open('PUT', route('user.quizzes.update', $quiz->id)) !!}
 
             {!! BSForm::multi([
                     ['text', 'name', 'Quiz Name', $quiz->name],
