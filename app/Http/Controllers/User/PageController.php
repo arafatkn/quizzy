@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class PageController extends Controller
 {
     /**
-     * Home Page
+     * Home Page.
      */
     public function index(Request $request)
     {

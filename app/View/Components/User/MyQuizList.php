@@ -8,7 +8,7 @@ use Illuminate\View\Component;
 class MyQuizList extends Component
 {
     /**
-     * My Quizzes
+     * My Quizzes.
      */
     public $quizzes = [];
 

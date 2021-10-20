@@ -16,9 +16,9 @@ class QuestionController extends Controller
 
         $question = new Question();
         $question->quiz_id = $quiz->id;
-        $question->fill( $request->only(['question', 'answer', 'options']) );
+        $question->fill($request->only(['question', 'answer', 'options']));
 
-        if($question->save()) {
+        if ($question->save()) {
             return back()->withSuccess('Question has been added successfully.');
         }
 
@@ -29,9 +29,9 @@ class QuestionController extends Controller
     {
         auth()->user()->quizzes()->findOrFail($question->quiz_id);
 
-        $question->fill( $request->only(['question', 'answer', 'options']) );
+        $question->fill($request->only(['question', 'answer', 'options']));
 
-        if($question->save()) {
+        if ($question->save()) {
             return back()->withSuccess('Question has been updated successfully.');
         }
 

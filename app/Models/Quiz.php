@@ -39,7 +39,7 @@ class Quiz extends Model
     // Relations
 
     /**
-     * Every Quiz will be created by a user (author)
+     * Every Quiz will be created by a user (author).
      */
     public function author()
     {
@@ -47,7 +47,7 @@ class Quiz extends Model
     }
 
     /**
-     * Every Quiz has many questions
+     * Every Quiz has many questions.
      */
     public function questions()
     {
@@ -55,7 +55,7 @@ class Quiz extends Model
     }
 
     /**
-     * Every Quiz has many attempts
+     * Every Quiz has many attempts.
      */
     public function attempts()
     {
@@ -65,7 +65,7 @@ class Quiz extends Model
     // Scopes
 
     /**
-     * Filter only public quizzes
+     * Filter only public quizzes.
      *
      * @param  Builder  $query
      * @return Builder
@@ -76,10 +76,10 @@ class Quiz extends Model
     }
 
     /**
-     * Filter only specific author's quizzes
+     * Filter only specific author's quizzes.
      *
      * @param  Builder  $query
-     * @param  User|integer  $author
+     * @param  User|int  $author
      * @return Builder
      */
     public function scopeOfAuthor(Builder $query, $author): Builder
@@ -92,7 +92,7 @@ class Quiz extends Model
     }
 
     /**
-     * Filter only specific matched quizzes
+     * Filter only specific matched quizzes.
      *
      * @param  Builder  $query
      * @param  string  $search

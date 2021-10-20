@@ -7,7 +7,7 @@ class BSForm
     public static function show($method, $action, $data, $submit = [])
     {
         echo '<form method="'.$method.'"';
-        if (!empty($action) || strlen($action) > 0) {
+        if (! empty($action) || strlen($action) > 0) {
             echo ' action="'.$action.'"';
         }
         echo '>';
@@ -17,18 +17,18 @@ class BSForm
             self::$fn($arr);
         }
         echo '<button type="submit" class="btn ';
-        if (isset($submit["class"])) {
-            echo $submit["class"];
+        if (isset($submit['class'])) {
+            echo $submit['class'];
         } else {
             echo 'btn-primary';
         }
         echo '"';
-        if (isset($submit["extra"])) {
-            echo ' '.$submit["extra"];
+        if (isset($submit['extra'])) {
+            echo ' '.$submit['extra'];
         }
         echo '>';
-        if (isset($submit["value"])) {
-            echo $submit["value"];
+        if (isset($submit['value'])) {
+            echo $submit['value'];
         } else {
             echo 'Submit';
         }
@@ -38,17 +38,18 @@ class BSForm
 
     public static function open($method, $action = '', $data = []): string
     {
-        $str = '<form action="'.$action.'" method="'.($method=='PUT'?'POST':$method).'" '.self::printAttr($data).'>';
+        $str = '<form action="'.$action.'" method="'.($method == 'PUT' ? 'POST' : $method).'" '.self::printAttr($data).'>';
         $str .= '<input type="hidden" name="_token" value="'.csrf_token().'">';
         if ($method == 'PUT') {
             $str .= '<input type="hidden" name="_method" value="PUT">';
         }
+
         return $str;
     }
 
     public static function close($submit, $text = 'Submit', $class = 'btn btn-success', $data = []): string
     {
-        if (!$submit) {
+        if (! $submit) {
             return '</form>';
         }
 
@@ -61,6 +62,7 @@ class BSForm
         foreach ($data as $k => $v) {
             $str .= $k.'="'.$v.'" ';
         }
+
         return $str;
     }
 
@@ -76,6 +78,7 @@ class BSForm
                 isset($data[4]) ? $data[4] : []
             );
         }
+
         return $str;
     }
 
@@ -84,7 +87,7 @@ class BSForm
         $str = '';
         foreach ($datas as $data) {
             $func = $data[0];
-            $dc   = count($data);
+            $dc = count($data);
             switch ($dc) {
                 case 0:
                 case 1:
@@ -124,6 +127,7 @@ class BSForm
                 isset($data[3]) ? $data[3] : []
             );
         }
+
         return $str;
     }
 
@@ -132,15 +136,16 @@ class BSForm
         $str = '
         <div class="mb-3">';
 
-        if (!empty($label)) {
+        if (! empty($label)) {
             $str .= '<label for="'.$type.'" class="form-label">'.$label.':</label>';
         }
 
         $str .= '<input type="'.$type.'" class="form-control" name="'.$name.'" value="'.old($name, $value).'" '.self::printAttr($data).'>';
-        if ($type == "file") {
+        if ($type == 'file') {
             $str .= '<img src="'.$value.'"/>';
         }
         $str .= '</div>';
+
         return $str;
     }
 
@@ -149,7 +154,7 @@ class BSForm
         $str = '
         <div class="mb-3">';
 
-        if (!empty($label)) {
+        if (! empty($label)) {
             $str .= '<label for="select" class="form-label">'.$label.':</label>';
         }
 
@@ -160,6 +165,7 @@ class BSForm
         $str .= '
             </select>
         </div>';
+
         return $str;
     }
 
@@ -168,11 +174,11 @@ class BSForm
         $str = '
         <div class="mb-3">';
 
-        if (!empty($label)) {
+        if (! empty($label)) {
             $str .= '<label class="form-label" for="select">'.$label.':</label>';
         }
 
-        $str   .= '<select class="form-control" multiple="true" name="'.$name.'[]" '.self::printAttr($data).'>';
+        $str .= '<select class="form-control" multiple="true" name="'.$name.'[]" '.self::printAttr($data).'>';
         $value = old($name, $value);
         foreach ($options as $k => $v) {
             $str .= '<option value="'.$k.'"'.(in_array($k, $value) ? ' selected' : '').'>'.$v.'</option>';
@@ -180,6 +186,7 @@ class BSForm
         $str .= '
             </select>
         </div>';
+
         return $str;
     }
 
@@ -188,12 +195,13 @@ class BSForm
         $str = '
         <div class="mb-3">';
 
-        if (!empty($label)) {
+        if (! empty($label)) {
             $str .= '<label for="textarea" class="form-label">'.$label.':</label>';
         }
 
         $str .= '<textarea class="form-control" name="'.$name.'" '.self::printAttr($data).'>'.old($name, $value).'</textarea>
         </div>';
+
         return $str;
     }
 
@@ -246,7 +254,8 @@ class BSForm
 
     public static function checkbox($name, $label = '', $value = '', $data = []): string
     {
-        $checked = old($name, $value) ? "checked" : "";
+        $checked = old($name, $value) ? 'checked' : '';
+
         return '
         <div class="mb-3 form-check">
             <input type="checkbox" class="form-check-input" name="'.$name.'" '.$checked.' '.self::printAttr($data).'>

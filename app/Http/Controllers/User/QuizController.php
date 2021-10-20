@@ -8,16 +8,16 @@ use Illuminate\Http\Request;
 
 class QuizController extends Controller
 {
-    function __construct()
+    public function __construct()
     {
         $this->setView('quizzes');
         parent::__construct();
-        $this->breadcrumbs[] = [ 'name' => 'Quizzes', 'url' => route('user.quizzes.index') ];
+        $this->breadcrumbs[] = ['name' => 'Quizzes', 'url' => route('user.quizzes.index')];
     }
 
     /**
      * All available quiz list.
-     * Route = /user/quizzes
+     * Route = /user/quizzes.
      */
     public function index(Request $request)
     {
@@ -40,7 +40,7 @@ class QuizController extends Controller
 
     /**
      * Show a quiz details.
-     * Route = /user/quizzes/{quiz}
+     * Route = /user/quizzes/{quiz}.
      */
     public function show(Quiz $quiz)
     {
@@ -49,8 +49,8 @@ class QuizController extends Controller
         }
 
         $this->header();
-        $this->breadcrumbs[] = [ 'name' => 'My Quizzes', 'url' => route('user.my_quizzes') ];
-        $this->breadcrumbs[] = [ 'name' => 'Details', 'url' => '' ];
+        $this->breadcrumbs[] = ['name' => 'My Quizzes', 'url' => route('user.my_quizzes')];
+        $this->breadcrumbs[] = ['name' => 'Details', 'url' => ''];
 
         $this->data['quiz'] = $quiz;
         $this->data['questions'] = $quiz->questions()->paginate();
@@ -60,12 +60,12 @@ class QuizController extends Controller
 
     /**
      * Quizzes created by current logged-in users.
-     * Route = /user/my-quizzes
+     * Route = /user/my-quizzes.
      */
     public function myQuizzes(Request $request)
     {
         $this->header();
-        $this->breadcrumbs[] = [ 'name' => 'My Quizzes', 'url' => '' ];
+        $this->breadcrumbs[] = ['name' => 'My Quizzes', 'url' => ''];
 
         $quizzes = Quiz::ofAuthor($this->user->id);
 
@@ -80,13 +80,13 @@ class QuizController extends Controller
 
     /**
      * Add New Quiz Page
-     * Route = /user/quizzes/create
+     * Route = /user/quizzes/create.
      */
     public function create()
     {
         $this->header();
-        $this->breadcrumbs[] = [ 'name' => 'My Quizzes', 'url' => route('user.my_quizzes') ];
-        $this->breadcrumbs[] = [ 'name' => 'Create', 'url' => '' ];
+        $this->breadcrumbs[] = ['name' => 'My Quizzes', 'url' => route('user.my_quizzes')];
+        $this->breadcrumbs[] = ['name' => 'Create', 'url' => ''];
 
         return $this->view('create');
     }
@@ -94,14 +94,14 @@ class QuizController extends Controller
     /**
      * Store quiz in database.
      * Route = /user/quizzes
-     * Method = POST
+     * Method = POST.
      */
     public function store(QuizStoreRequest $request)
     {
         $quiz = new Quiz();
 
         $quiz->fill($request->only([
-            'name', 'status', 'time_limit', 'total_marks', 'total_questions', 'author_digest'
+            'name', 'status', 'time_limit', 'total_marks', 'total_questions', 'author_digest',
         ]));
         $quiz->author_digest = $request->has('author_digest');
         $quiz->author_id = auth()->user()->id;
@@ -116,7 +116,7 @@ class QuizController extends Controller
 
     /**
      * Edit Quiz Page
-     * Route = /user/quizzes/{quiz}/edit
+     * Route = /user/quizzes/{quiz}/edit.
      */
     public function edit(Quiz $quiz)
     {
@@ -125,8 +125,8 @@ class QuizController extends Controller
         }
 
         $this->header();
-        $this->breadcrumbs[] = [ 'name' => 'My Quizzes', 'url' => route('user.my_quizzes') ];
-        $this->breadcrumbs[] = [ 'name' => 'Edit', 'url' => '' ];
+        $this->breadcrumbs[] = ['name' => 'My Quizzes', 'url' => route('user.my_quizzes')];
+        $this->breadcrumbs[] = ['name' => 'Edit', 'url' => ''];
 
         $this->data['quiz'] = $quiz;
 
@@ -136,7 +136,7 @@ class QuizController extends Controller
     /**
      * Update quiz in database.
      * Route = /user/quizzes/{quiz}
-     * Method = PUT / PATCH
+     * Method = PUT / PATCH.
      */
     public function update(Quiz $quiz, QuizStoreRequest $request)
     {
@@ -157,7 +157,7 @@ class QuizController extends Controller
     /**
      * Delete Quiz from Database
      * Route = /user/quizzes/{quiz}
-     * Method = DELETE
+     * Method = DELETE.
      */
     public function destroy(Quiz $quiz)
     {

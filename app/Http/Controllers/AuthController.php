@@ -20,23 +20,26 @@ class AuthController extends Controller
     public function login()
     {
         $this->header();
+
         return $this->view('login');
     }
 
     public function register()
     {
         $this->header();
+
         return $this->view('register');
     }
 
     public function lostPassword()
     {
         $this->header();
+
         return $this->view('lostpass');
     }
 
     /**
-     * Handle Login form submisison
+     * Handle Login form submisison.
      *
      * @param  LoginRequest  $request
      * @return \Illuminate\Http\RedirectResponse
@@ -48,13 +51,13 @@ class AuthController extends Controller
             'password' => 'required',
         ]);*/
 
-        if (!auth()->attempt($request->only(['email', 'password']), $request->remember)) {
+        if (! auth()->attempt($request->only(['email', 'password']), $request->remember)) {
             return back()->withErrors('Email or Password is incorrect');
         }
 
         $user = auth()->user();
 
-        if (!empty($request->redir)) {
+        if (! empty($request->redir)) {
             $url = rawurldecode($request->redir);
         } else {
             $url = route('user.index');
@@ -70,13 +73,13 @@ class AuthController extends Controller
         $user->password = bcrypt($request->password);
         $user->role = 'user';
 
-        if (!$user->save()) {
+        if (! $user->save()) {
             return back()->withErrors('Something is wrong. Please try again.');
         }
 
         auth()->login($user, true);
 
-        if (!empty($request->redir)) {
+        if (! empty($request->redir)) {
             $url = rawurldecode($request->redir);
         } else {
             $url = route('user.index');
@@ -104,6 +107,7 @@ class AuthController extends Controller
     public function logout()
     {
         auth()->logout();
+
         return redirect('/auth/login')->withSuccess('You have been logged out successfully.');
     }
 }

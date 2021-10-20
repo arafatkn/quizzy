@@ -22,7 +22,6 @@ Route::get('/pages/{page}', [PageController::class, 'show'])->name('pages.show')
 Route::group(
     ['prefix' => 'auth', 'as' => 'auth.', 'middleware' => 'guest'],
     function () {
-
         Route::get('/login', [AuthController::class, 'login'])->name('login');
         Route::get('/register', [AuthController::class, 'register'])->name('register');
         Route::get('/lostpass', [AuthController::class, 'lostPassword'])->name('lostpass');
