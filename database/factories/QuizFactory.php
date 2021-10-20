@@ -22,19 +22,21 @@ class QuizFactory extends Factory
      */
     public function definition(): array
     {
+        $total_questions = $this->faker->randomElement([10, 20, 30, 40, 50, 60]);
+
         return [
             'author_id' => User::inRandomOrder()->first()->id ?? 1,
             'name' => $this->faker->text(30),
             'status' => $this->faker->boolean(),
-            'total_questions' => $this->faker->randomElement([10, 20, 30, 40, 50, 60]),
-            'total_marks' => $this->faker->randomElement([10, 20, 30, 40, 50, 60]),
-            'time_limit' => $this->faker->randomElement([600, 1200, 1800, 2400, 3000, 3600]),
+            'total_questions' => $total_questions,
+            'total_marks' => $total_questions * rand(1, 3),
+            'time_limit' => $total_questions * rand(1, 2) * 60,
             'author_digest' => $this->faker->boolean(70),
         ];
     }
 
     /**
-     * Indicates that it's a public quiz
+     * Indicates that it's a public quiz.
      */
     public function public()
     {

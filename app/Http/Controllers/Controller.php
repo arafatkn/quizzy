@@ -15,30 +15,32 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     /**
-     * Store variables, which will be sent to view automatically
+     * Store variables, which will be sent to view automatically.
+     *
      * @var array
      */
     protected $data = [];
 
-    protected $view = "public.", $route = "";
+    protected $view = 'public.';
+    protected $route = '';
 
     /**
-     * Store public storage object
+     * Store public storage object.
      */
     protected $storage;
 
     /**
-     * Store request object
+     * Store request object.
      */
     protected $request;
 
     /**
-     * current logged-in user
+     * current logged-in user.
      */
     protected $user;
 
     /**
-     * Breadcrumb links
+     * Breadcrumb links.
      */
     protected $breadcrumbs;
 
@@ -52,6 +54,7 @@ class Controller extends BaseController
     {
         $this->view .= $view.'.';
     }
+
     public function setRoute($route)
     {
         $this->route .= $route.'.';
@@ -64,13 +67,14 @@ class Controller extends BaseController
         }
     }
 
-    public function view($file = "index")
+    public function view($file = 'index')
     {
-        $this->data["bsform"] = new BSForm();
-        $this->data["user"] = $this->user;
+        $this->data['bsform'] = new BSForm();
+        $this->data['user'] = $this->user;
         $this->data['storage'] = $this->storage;
-        $this->data["request"] = $this->request;
-        $this->data["breadcrumbs"] = $this->breadcrumbs;
+        $this->data['request'] = $this->request;
+        $this->data['breadcrumbs'] = $this->breadcrumbs;
+
         return view($this->view.$file, $this->data);
     }
 
@@ -85,7 +89,7 @@ class Controller extends BaseController
 
     public function notfound(string $file = '')
     {
-        $this->breadcrumbs = array('name' => 'Not Found', 'url'=> '#', );
+        $this->breadcrumbs = ['name' => 'Not Found', 'url'=> '#'];
         if (empty($file)) {
             return $this->view('404');
         } else {

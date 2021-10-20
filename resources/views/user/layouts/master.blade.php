@@ -19,6 +19,7 @@
             @include('user.layouts.master.header')
         </div>
         <div class="col py-3">
+            @include('partial.breadcrumbs')
             @include('partial.alert')
             @yield('content')
         </div>

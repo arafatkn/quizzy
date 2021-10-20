@@ -45,7 +45,7 @@
                                         id="remember"
                                         name="remember"
                                     />
-                                    <label class="form-check-label" for="form1Example3"> I agree to <a href="{{ route('pages.show', 'tos') }}">term & conditions</a> </label>
+                                    <label class="form-check-label" for="checkbox"> I agree to <a href="{{ route('pages.show', 'tos') }}">term & conditions</a> </label>
                                 </div>
 
                                 <div class="d-grid">
