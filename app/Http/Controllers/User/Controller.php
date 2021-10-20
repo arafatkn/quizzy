@@ -40,12 +40,13 @@ class Controller extends BaseController
     /**
      * Breadcrumb links
      */
-    protected $breadcrumbs;
+    protected $breadcrumbs = [];
 
     public function __construct()
     {
         $this->storage = Storage::disk('public');
         $this->request = request();
+        $this->breadcrumbs[] = [ 'name' => 'Dashboard', 'url' => route('user.index') ];
     }
 
     public function setView($view)
@@ -64,7 +65,6 @@ class Controller extends BaseController
 
     public function view($file = "index")
     {
-        $this->data["bsform"] = new BSForm();
         $this->data["user"] = $this->user;
         $this->data['storage'] = $this->storage;
         $this->data["request"] = $this->request;

@@ -12,6 +12,7 @@ class QuizController extends Controller
     {
         $this->setView('quizzes');
         parent::__construct();
+        $this->breadcrumbs[] = [ 'name' => 'Quizzes', 'url' => route('user.quizzes.index') ];
     }
 
     /**
@@ -48,6 +49,8 @@ class QuizController extends Controller
         }
 
         $this->header();
+        $this->breadcrumbs[] = [ 'name' => 'My Quizzes', 'url' => route('user.my_quizzes') ];
+        $this->breadcrumbs[] = [ 'name' => 'Details', 'url' => '' ];
 
         $this->data['quiz'] = $quiz;
         $this->data['questions'] = $quiz->questions()->paginate();
@@ -62,6 +65,7 @@ class QuizController extends Controller
     public function myQuizzes(Request $request)
     {
         $this->header();
+        $this->breadcrumbs[] = [ 'name' => 'My Quizzes', 'url' => '' ];
 
         $quizzes = Quiz::ofAuthor($this->user->id);
 
@@ -81,6 +85,8 @@ class QuizController extends Controller
     public function create()
     {
         $this->header();
+        $this->breadcrumbs[] = [ 'name' => 'My Quizzes', 'url' => route('user.my_quizzes') ];
+        $this->breadcrumbs[] = [ 'name' => 'Create', 'url' => '' ];
 
         return $this->view('create');
     }
@@ -119,6 +125,8 @@ class QuizController extends Controller
         }
 
         $this->header();
+        $this->breadcrumbs[] = [ 'name' => 'My Quizzes', 'url' => route('user.my_quizzes') ];
+        $this->breadcrumbs[] = [ 'name' => 'Edit', 'url' => '' ];
 
         $this->data['quiz'] = $quiz;
 

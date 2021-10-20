@@ -15,8 +15,34 @@
                         <td>{{ $quiz->name }}</td>
                     </tr>
                     <tr>
+                        <th>Status</th>
+                        <td>
+                            <span class="badge {{ $quiz->status ? 'bg-primary' : 'bg-danger' }}">
+                                {{ $quiz->status_as_text }}
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
                         <th>Author</th>
                         <td><a href="?author_id={{ $quiz->author_id }}">{{ $user->name }}</a></td>
+                    </tr>
+                    <tr>
+                        <th>Author Digest</th>
+                        <td>
+                            @if($quiz->author_digest)
+                                Yes <i class="text-primary bi bi-check-circle-fill"></i>
+                            @else
+                                No <i class="text-danger bi bi-x-circle-fill"></i>
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Total Marks</th>
+                        <td>{{ $quiz->total_marks }}</td>
+                    </tr>
+                    <tr>
+                        <th>Total Questions</th>
+                        <td>{{ $quiz->total_questions }}</td>
                     </tr>
                     <tr>
                         <th>Time Limit</th>
