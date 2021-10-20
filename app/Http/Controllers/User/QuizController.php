@@ -23,7 +23,7 @@ class QuizController extends Controller
     {
         $this->header();
 
-        $quizzes = Quiz::public()->with(['author']);
+        $quizzes = Quiz::exceptAuthor($this->user->id)->public()->with(['author']);
 
         if ($request->has('search')) {
             $quizzes = $quizzes->searchBy($request->search);
@@ -76,6 +76,27 @@ class QuizController extends Controller
         $this->data['quizzes'] = $quizzes->withCount(['questions'])->latest()->paginate();
 
         return $this->view('my_quizzes');
+    }
+
+    /**
+     * Start attempting new Quiz
+     * Route = /user/quizzes/{quiz}/start.
+     */
+    public function start(Quiz $quiz)
+    {
+        $this->header();
+
+        if ($quiz->author_id == $this->user->id) {
+            return redirect()
+                ->route('user.quizzes.show', $quiz->id)
+                ->withErrors('You can not participate on your own quiz.');
+        }
+
+        $this->breadcrumbs[] = ['name' => 'Start Test', 'url' => ''];
+
+        $this->data['quiz'] = $quiz;
+
+        return $this->view('start');
     }
 
     /**

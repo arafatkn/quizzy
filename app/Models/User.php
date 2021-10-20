@@ -52,4 +52,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Quiz::class, 'author_id');
     }
+
+    /**
+     * User can attempt multiple quizzes.
+     */
+    public function attempts()
+    {
+        return $this->hasMany(Attempt::class);
+    }
 }

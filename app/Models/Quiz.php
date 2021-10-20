@@ -18,12 +18,23 @@ class Quiz extends Model
         return $this->total_marks / $this->total_questions;
     }
 
-    public function getAuthorDigestAsTextAttribute()
+    public function getAuthorDigestAsTextAttribute(): string
     {
         return $this->author_digest ? 'On' : 'Off';
     }
 
-    public function getStatusAsTextAttribute()
+    public function getTimeLimitAsTextAttribute(): string
+    {
+        $time = intdiv($this->time_limit, 60).' Min ';
+
+        if (($this->time_limit % 60) == 0) {
+            return $time;
+        }
+
+        return $time.($this->time_limit % 60).' Sec';
+    }
+
+    public function getStatusAsTextAttribute(): string
     {
         return $this->status ? 'Public' : 'Hidden';
     }
@@ -89,6 +100,22 @@ class Quiz extends Model
         }
 
         return $query->where('author_id', $author);
+    }
+
+    /**
+     * Exclude specific author's quizzes.
+     *
+     * @param  Builder  $query
+     * @param  User|int  $author
+     * @return Builder
+     */
+    public function scopeExceptAuthor(Builder $query, $author): Builder
+    {
+        if ($author instanceof User) {
+            $author = $author->id;
+        }
+
+        return $query->where('author_id', '!=', $author);
     }
 
     /**

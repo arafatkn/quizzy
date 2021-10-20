@@ -18,7 +18,9 @@
                 <td class="text-center">
                     <span class="badge {{ $quiz->status ? 'bg-primary' : 'bg-danger' }}">{{ $quiz->status_as_text }}</span>
                 </td>
-                <td class="text-center">{{ $quiz->questions_count }}</td>
+                <td class="text-center">
+                    {{ $quiz->questions_count }}
+                </td>
                 <td class="text-center">
                     @if($quiz->author_digest)
                         <i class="text-primary bi bi-check-circle-fill"></i>

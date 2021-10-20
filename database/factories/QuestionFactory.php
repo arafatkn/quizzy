@@ -22,7 +22,7 @@ class QuestionFactory extends Factory
      */
     public function definition(): array
     {
-        $total_options = rand(3, 5);
+        $total_options = 4;
         $options = [];
 
         for ($i = 1; $i <= $total_options; $i++) {
