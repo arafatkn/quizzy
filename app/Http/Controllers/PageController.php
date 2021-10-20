@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class PageController extends Controller
 {
     /**
-     * Home Page
+     * Home Page.
      */
     public function index(Request $request)
     {
@@ -16,7 +16,7 @@ class PageController extends Controller
 
         $quizzes = Quiz::public();
 
-        if($request->has('search')) {
+        if ($request->has('search')) {
             $quizzes = $quizzes->searchBy($request->search);
         }
 

@@ -46,7 +46,7 @@ class User extends Authenticatable
     // Relations
 
     /**
-     * User can create multiple quizzes
+     * User can create multiple quizzes.
      */
     public function quizzes()
     {

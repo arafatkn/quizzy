@@ -36,7 +36,7 @@ class QuizFactory extends Factory
     }
 
     /**
-     * Indicates that it's a public quiz
+     * Indicates that it's a public quiz.
      */
     public function public()
     {
