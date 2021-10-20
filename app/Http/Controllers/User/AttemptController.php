@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class AttemptController extends Controller
 {
-    function __construct()
+    public function __construct()
     {
         $this->setView('attempts');
         parent::__construct();
@@ -82,9 +82,9 @@ class AttemptController extends Controller
     }
 
     /**
-     * Running Quiz
+     * Running Quiz.
      *
-     * @param Attempt $attempt
+     * @param  Attempt  $attempt
      */
     public function running(Attempt $attempt)
     {
@@ -106,7 +106,7 @@ class AttemptController extends Controller
     }
 
     /**
-     * Start Quiz Now
+     * Start Quiz Now.
      *
      * @param  Quiz  $quiz
      * @return \Illuminate\Http\RedirectResponse
