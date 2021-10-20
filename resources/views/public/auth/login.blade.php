@@ -34,7 +34,7 @@
                                         name="remember"
                                         value="1"
                                     />
-                                    <label class="form-check-label" for="form1Example3"> Remember password </label>
+                                    <label class="form-check-label" for="checkbox"> Remember password </label>
                                 </div>
 
                                 <div class="d-grid">

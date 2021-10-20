@@ -15,7 +15,7 @@ class PageController extends Controller
         $this->header();
 
         $this->data['quizzes'] = Quiz::public()->latest()->take(5)->get();
-        $this->data['my_quizzes'] = $this->user->quizzes()->latest()->take(7)->get();
+        $this->data['my_quizzes'] = $this->user->quizzes()->withCount(['questions'])->latest()->take(7)->get();
 
         return $this->view('index');
     }

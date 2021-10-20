@@ -69,7 +69,7 @@ class QuizController extends Controller
             $quizzes = $quizzes->searchBy($request->search);
         }
 
-        $this->data['quizzes'] = $quizzes->latest()->paginate();
+        $this->data['quizzes'] = $quizzes->withCount(['questions'])->latest()->paginate();
 
         return $this->view('my_quizzes');
     }

@@ -25,15 +25,15 @@ class QuestionFactory extends Factory
         $total_options = rand(3, 5);
         $options = [];
 
-        while($total_options--) {
-            $options[] = $this->faker->text(20);
+        for ($i = 1; $i <= $total_options; $i++) {
+            $options[$i] = $this->faker->text(20);
         }
 
         return [
             'quiz_id' => Quiz::inRandomOrder()->first()->id,
             'question' => $this->faker->text(200),
             'options' => $options,
-            'answer' => rand(0, count($options)),
+            'answer' => rand(1, count($options)),
         ];
     }
 }

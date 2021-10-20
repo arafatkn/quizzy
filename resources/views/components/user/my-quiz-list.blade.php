@@ -3,9 +3,9 @@
         <thead>
         <tr>
             <th>Quiz Title</th>
-            <th>Status</th>
-            <th>Time Limit</th>
-            <th>Digest</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Added Questions</th>
+            <th class="text-center">Digest</th>
             <th></th>
         </tr>
         </thead>
@@ -15,11 +15,11 @@
                 <td>
                     <a href="{{ route('user.quizzes.show', $quiz->id) }}">{{ $quiz->name }}</a>
                 </td>
-                <td>
+                <td class="text-center">
                     <span class="badge {{ $quiz->status ? 'bg-primary' : 'bg-danger' }}">{{ $quiz->status_as_text }}</span>
                 </td>
-                <td>{{ intdiv($quiz->time_limit, 60) }} Min {{ $quiz->time_limit%60 ? ($quiz->time_limit%60).' sec' : '' }}</td>
-                <td>
+                <td class="text-center">{{ $quiz->questions_count }}</td>
+                <td class="text-center">
                     @if($quiz->author_digest)
                         <i class="text-primary bi bi-check-circle-fill"></i>
                     @else

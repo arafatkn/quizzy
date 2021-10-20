@@ -54,12 +54,20 @@ class Quiz extends Model
         return $this->hasMany(Question::class);
     }
 
+    /**
+     * Every Quiz has many attempts
+     */
+    public function attempts()
+    {
+        return $this->hasMany(Attempt::class);
+    }
+
     // Scopes
 
     /**
      * Filter only public quizzes
      *
-     * @param Builder $query
+     * @param  Builder  $query
      * @return Builder
      */
     public function scopePublic(Builder $query): Builder
@@ -70,13 +78,13 @@ class Quiz extends Model
     /**
      * Filter only specific author's quizzes
      *
-     * @param Builder $query
-     * @param User|integer $author
+     * @param  Builder  $query
+     * @param  User|integer  $author
      * @return Builder
      */
     public function scopeOfAuthor(Builder $query, $author): Builder
     {
-        if($author instanceof User) {
+        if ($author instanceof User) {
             $author = $author->id;
         }
 
@@ -86,8 +94,8 @@ class Quiz extends Model
     /**
      * Filter only specific matched quizzes
      *
-     * @param Builder $query
-     * @param string $search
+     * @param  Builder  $query
+     * @param  string  $search
      * @return Builder
      */
     public function scopeSearchBy(Builder $query, string $search): Builder
