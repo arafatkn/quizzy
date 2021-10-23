@@ -21,7 +21,7 @@
                 <i class="fs-4 bi-person"></i> <span class="ms-1 d-none d-sm-inline">My Quizzes</span> </a>
         </li>
         <li>
-            <a href="{{ route('user.quizzes.index') }}" class="nav-link px-0 align-middle">
+            <a href="{{ route('user.attempts.index') }}" class="nav-link px-0 align-middle">
                 <i class="fs-4 bi-hand-index"></i> <span class="ms-1 d-none d-sm-inline">My Attempts</span> </a>
         </li>
     </ul>

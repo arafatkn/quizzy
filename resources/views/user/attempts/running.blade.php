@@ -4,6 +4,11 @@
 
 @section('content')
 
+    <div v-if="message" class="alert alert-dismissible position-fixed fade show top-0 end-0" :class="alert_type" role="alert">
+        @{{ message }}
+        <button type="button" class="btn-close" @click="message=null" aria-label="Close"></button>
+    </div>
+
     <div class="row justify-content-center">
         <div class="col-auto mb-2">
             <div class="d-grid">
@@ -11,13 +16,20 @@
             </div>
         </div>
         <div class="col-auto mb-2">
-            <button class="btn btn-lg btn-primary" id="finishBtn">Finish Quiz</button>
+            <button class="btn btn-lg btn-primary" id="finishBtn" @click="finishNow()" :disabled="loading">
+                <span v-if="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Finish Quiz
+            </button>
         </div>
     </div>
 
     <div class="card mt-3">
-        <div class="card-header">
-            <h3 class="text-center">{{ $quiz->name }}</h3>
+        <div class="card-header d-flex justify-content-between">
+            <span class="h3">{{ $quiz->name }}</span>
+            <button class="btn btn-primary" @click="saveProgress">
+                <i class="bi bi-save-fill"></i>
+                <span class="d-none d-sm-inline-block">Save Progress</span>
+            </a>
         </div>
         <div class="card-body">
 
@@ -50,20 +62,25 @@
 
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
+
         let answers = @json($attempt->answers);
         let questions = @json($questions);
 
         var vapp = new Vue({
             el: '#vapp',
-            
+
             data: {
                 answers: answers,
                 questions: questions,
                 question: {},
                 answer: null,
                 current_index: 0,
+                loading: false,
+                message: '',
+                alert_type: 'alert-info',
             },
 
             methods: {
@@ -77,7 +94,43 @@
 
                 updateAnswer(qid, ans) {
                     this.answers[qid] = ans;
-                }
+                },
+
+                saveProgress() {
+                    this.submitAnswers(false);
+                },
+
+                finishNow() {
+                    this.submitAnswers(true);
+                },
+
+                submitAnswers(finish) {
+                    this.loading = true;
+                    let url = "{{ route('user.attempts.update', $attempt->id) }}";
+                    axios.put(url, {
+                            _method: 'PUT',
+                            answers: this.answers,
+                            submit: finish,
+                        })
+                        .then(function (response) {
+                            if ( response.data.redirect ) {
+                                alert(response.data.message);
+                                window.location.href = response.data.redirect;
+                            } else {
+                                vapp.alert_type = (response.status === 202) ? 'alert-success' : 'alert-danger';
+                                vapp.message = response.data.message;
+                                setTimeout(() => vapp.message = null, 3000);
+                            }
+                        })
+                        .catch(function (error) {
+                            if (error.response && error.response.data && error.response.data.message) {
+                                alert(error.response.data.message);
+                            } else {
+                                console.log(error);
+                            }
+                        })
+                        .finally(() => this.loading = false);
+                },
             },
 
             watch: {
