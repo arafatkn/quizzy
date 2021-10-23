@@ -55,16 +55,16 @@ class Attempt extends Model
         }
 
         $questions = $this->questions->mapWithKeys(function ($item) {
-            return [ $item->id => $item->answer ];
+            return [$item->id => $item->answer];
         });
 
         $corrects = 0;
         $wrongs = 0;
 
         foreach ($this->answers as $qid => $answer) {
-            if ( $answer == $questions[$qid] ) {
+            if ($answer == $questions[$qid]) {
                 $corrects++;
-            } else if ($answer !== null) {
+            } elseif ($answer !== null) {
                 $wrongs++;
             }
         }
