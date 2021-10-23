@@ -17,7 +17,7 @@ class AttemptController extends Controller
     }
 
     /**
-     * Display a listing of user's attempts
+     * Display a listing of user's attempts.
      */
     public function index()
     {
@@ -29,7 +29,7 @@ class AttemptController extends Controller
     }
 
     /**
-     * Display a single attempt
+     * Display a single attempt.
      *
      * @param  Attempt  $attempt
      */
@@ -41,7 +41,7 @@ class AttemptController extends Controller
             return redirect()->route('user.quizzes.start', $attempt->quiz_id)->withErrors('Please start again.');
         }
 
-        if (!$attempt->examined_at) {
+        if (! $attempt->examined_at) {
             $attempt->examine();
         }
 
