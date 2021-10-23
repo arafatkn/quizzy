@@ -38,7 +38,7 @@ class QuizTest extends TestCase
         $quizzes = Quiz::searchBy('a')->get();
 
         $filtered = $created_quizzes->filter(function ($item, $key) {
-            return strpos($item->name, 'a') !== false; // Case in-sensitive search
+            return stripos($item->name, 'a') !== false; // Case in-sensitive search
         });
 
         $this->assertSameSize($filtered, $quizzes);
