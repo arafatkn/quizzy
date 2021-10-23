@@ -1,11 +1,11 @@
 <div class="table-responsive">
     <table class="table table-striped align-middle mb-0">
         <thead>
-        <tr>
-            <th>Question</th>
-            <th>Options</th>
-            <th></th>
-        </tr>
+            <tr>
+                <th>Question</th>
+                <th>Options</th>
+                <th></th>
+            </tr>
         </thead>
         <tbody>
         @foreach($questions as $question)
