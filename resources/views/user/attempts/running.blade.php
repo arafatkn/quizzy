@@ -29,9 +29,19 @@
             <button class="btn btn-primary" @click="saveProgress">
                 <i class="bi bi-save-fill"></i>
                 <span class="d-none d-sm-inline-block">Save Progress</span>
-            </a>
+            </button>
         </div>
         <div class="card-body">
+
+            <nav aria-label="Questions Navigation">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item"><a @click="goPreviousQuestion" class="page-link" href="javascript:void(0)">Previous</a></li>
+                    <li class="page-item" v-for="i in (questions.length > 20 ? 20 : questions.length)">
+                        <a @click="goToQuestion(i)" class="page-link" href="javascript:void(0)">@{{ i }}</a>
+                    </li>
+                    <li class="page-item"><a @click="goNextQuestion" class="page-link" href="javascript:void(0)">Next</a></li>
+                </ul>
+            </nav>
 
             <div class="card">
                 <div class="card-header">
@@ -90,6 +100,10 @@
 
                 goPreviousQuestion() {
                     this.current_index --;
+                },
+
+                goToQuestion(i) {
+                    this.current_index = i;
                 },
 
                 updateAnswer(qid, ans) {

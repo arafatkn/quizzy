@@ -189,7 +189,6 @@ class AttemptController extends Controller
         ]);
 
         return redirect()
-            ->route('user.attempts.running', $attempt->id)
-            ->withErrors('You can not start until completing previous attempt.');
+            ->route('user.attempts.running', $attempt->id);
     }
 }

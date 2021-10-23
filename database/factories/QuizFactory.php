@@ -22,7 +22,7 @@ class QuizFactory extends Factory
      */
     public function definition(): array
     {
-        $total_questions = $this->faker->randomElement([10, 20, 30, 40, 50, 60]);
+        $total_questions = $this->faker->randomElement([10, 20, 30]);
 
         return [
             'author_id' => User::inRandomOrder()->first()->id ?? 1,
