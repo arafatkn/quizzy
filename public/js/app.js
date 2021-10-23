@@ -5159,8 +5159,7 @@ __webpack_require__.r(__webpack_exports__);
 
 try {
   window.Popper = (_popperjs_core_dist_umd_popper_js__WEBPACK_IMPORTED_MODULE_0___default());
-
-  __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
+  window.bootstrap = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
 } catch (e) {
   console.log(e);
 }

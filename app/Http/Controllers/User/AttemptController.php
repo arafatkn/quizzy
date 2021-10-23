@@ -17,79 +17,102 @@ class AttemptController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Display a listing of user's attempts
      */
     public function index()
     {
-        //
+        $this->header();
+
+        $this->data['attempts'] = $this->user->attempts()->with(['quiz'])->paginate();
+
+        return $this->view('index');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a single attempt
      *
-     * @return \Illuminate\Http\Response
+     * @param  Attempt  $attempt
      */
-    public function create()
+    public function show(Attempt $attempt)
     {
-        //
-    }
+        $this->header();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        if ($this->user->id != $attempt->user_id) {
+            return redirect()->route('user.quizzes.start', $attempt->quiz_id)->withErrors('Please start again.');
+        }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        if (!$attempt->examined_at) {
+            $attempt->examine();
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $this->data['attempt'] = $attempt;
+        $this->data['quiz'] = $attempt->quiz;
+        $this->data['questions'] = $attempt->questions;
+        $this->breadcrumbs[] = ['name' => 'Details', 'url' => route('user.attempts.show', $attempt->id)];
+
+        return $this->view('show');
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  Attempt  $attempt
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Attempt $attempt)
     {
-        //
+        $user = auth()->user();
+
+        if ($user->id != $attempt->user_id) {
+            return response()->json(['message' => 'Not Found'], 404);
+        }
+
+        if ($attempt->submitted_at) {
+            return response()->json([
+                'message' => 'Already submitted. Redirecting to result page...',
+                'redirect' => route('user.attempts.show', $attempt->id),
+            ]);
+        }
+
+        if ($request->has('answers')) {
+            $answers = $attempt->answers;
+            foreach ($attempt->answers as $qid => $answer) {
+                if (isset($request->answers[$qid])) {
+                    $answers->{$qid} = $request->answers[$qid];
+                }
+            }
+            $attempt->answers = $answers;
+        }
+
+        if ($request->get('submit', false) || $attempt->time_remaining <= 0) {
+            $attempt->submitted_at = now();
+        }
+
+        if ($attempt->save()) {
+            if ($attempt->submitted_at) {
+                return response()->json([
+                    'message' => 'Answers have been submitted successfully. Redirecting to result page...',
+                    'redirect' => route('user.attempts.show', $attempt->id),
+                ]);
+            }
+
+            return response()->json(['message' => 'Progress saved successfully.'], 202);
+        }
+
+        return response()->json(['message' => 'Unable to submit answers. Please click again...'], 501);
     }
 
     /**
      * Running Quiz
      *
-     * @param Attempt $attempt
+     * @param  Attempt  $attempt
      */
     public function running(Attempt $attempt)
     {
         if ($attempt->started_at->addSeconds($attempt->quiz->time_limit) < now()) {
-            return redirect()->route('user.attempts.update', $attempt->id);
+            //$attempt->submitted_at = now();
+            //return redirect()->route('user.attempts.show', $attempt->id);
         }
 
         $this->header();
@@ -100,7 +123,8 @@ class AttemptController extends Controller
 
         $this->data['attempt'] = $attempt;
         $this->data['quiz'] = $attempt->quiz;
-        $this->data['questions'] = $attempt->quiz->questions()->whereIn('id', array_keys(get_object_vars($attempt->answers)))->get();
+        $this->data['questions'] = $attempt->quiz->questions()->whereIn('id',
+            array_keys(get_object_vars($attempt->answers)))->get();
 
         return $this->view('running');
     }
