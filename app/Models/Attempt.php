@@ -9,7 +9,7 @@ class Attempt extends Model
 {
     use HasFactory;
 
-    const CREATED_AT = "started_at";
+    const CREATED_AT = 'started_at';
 
     protected $guarded = ['id'];
 

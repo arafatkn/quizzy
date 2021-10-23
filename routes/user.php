@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Controllers\User\AttemptController;
 use App\Http\Controllers\User\PageController;
 use App\Http\Controllers\User\QuestionController;
 use App\Http\Controllers\User\QuizController;
-use App\Http\Controllers\User\AttemptController;
 use Illuminate\Support\Facades\Route;
 
 /*
