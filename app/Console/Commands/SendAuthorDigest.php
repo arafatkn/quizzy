@@ -2,9 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\ProcessAuthorDigest;
-use App\Models\Quiz;
+use App\Mail\AuthorDigestMail;
+use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
 
 class SendAuthorDigest extends Command
 {
@@ -39,10 +40,14 @@ class SendAuthorDigest extends Command
      */
     public function handle()
     {
-        $quizzes = Quiz::where('author_digest', 1)->get();
+        $users = User::whereHas('quizzes', function ($query) {
+            $query->where('author_digest', 1);
+        })->get();
 
-        foreach ($quizzes as $quiz) {
-            ProcessAuthorDigest::dispatch($quiz);
+        foreach ($users as $user) {
+            // ProcessAuthorDigest::dispatch($user);
+            Mail::to($user->email)
+                ->send(new AuthorDigestMail($user));
         }
 
         return Command::SUCCESS;

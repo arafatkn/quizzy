@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\Quiz;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -12,19 +12,16 @@ class AuthorDigestMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public $quiz;
-
-    public $attempts;
+    public $user;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Quiz $quiz, $attempts)
+    public function __construct(User $user)
     {
-        $this->quiz = $quiz;
-        $this->attempts = $attempts;
+        $this->user = $user;
     }
 
     /**
@@ -34,7 +31,18 @@ class AuthorDigestMail extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->subject("Daily Digest for {$this->quiz->name}")
-            ->markdown('emails.author_digest');
+        $quizzes = $this->user->quizzes()
+            ->where('author_digest', 1)
+            ->with('attempts', function ($query) {
+                $query->whereDate('submitted_at', today()->subDay())
+                    ->groupBy('user_id')
+                    ->selectRaw("user_id, COUNT(user_id) as attempts_count, MAX(marks) as max_marks, MIN(marks) as min_marks, AVG(marks) as avg_marks");
+            });
+
+        return $this->subject("Daily Digest from ".config('app.name'))
+            ->markdown('emails.author_digest')
+            ->with([
+                'quizzes' => $quizzes,
+            ]);
     }
 }
