@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Mail\AuthorDigestMail;
 use App\Models\Quiz;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -17,18 +18,18 @@ class ProcessAuthorDigest implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * @var Quiz
+     * @var User
      */
-    private $quiz;
+    private $user;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Quiz $quiz)
+    public function __construct(User $user)
     {
-        $this->quiz = $quiz;
+        $this->user = $user;
     }
 
     /**
@@ -39,7 +40,7 @@ class ProcessAuthorDigest implements ShouldQueue
     public function handle()
     {
         // Send email
-        Mail::to($this->quiz->author->email)
-            ->send(new AuthorDigestMail($this->quiz, $this->quiz->attempts));
+        Mail::to($this->user->email)
+            ->send(new AuthorDigestMail($this->user));
     }
 }

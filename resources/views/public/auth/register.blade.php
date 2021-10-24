@@ -49,7 +49,7 @@
                                 </div>
 
                                 <div class="d-grid">
-                                    <button class="btn btn-primary btn-lg" type="submit">Login</button>
+                                    <button class="btn btn-primary btn-lg" type="submit">Sign Up</button>
                                 </div>
                             </form>
 

@@ -13,7 +13,7 @@ class Quiz extends Model
     protected $guarded = ['id', 'author_id'];
 
     // Custom Attribute
-    public function getPointsPerQuestionAttribute()
+    public function getMarksPerQuestionAttribute()
     {
         return $this->total_marks / $this->total_questions;
     }

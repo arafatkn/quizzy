@@ -56,12 +56,10 @@
 
 <script type="text/javascript">
     function gdConfirm(url) {
-        console.log(url);
         document.getElementById("gdForm").action = url;
     }
     function formFill(dom, data) {
         dom.querySelectorAll('input,select,textarea').forEach(function(el){
-            console.log(el.name)
             if(el.name.includes('[')) {
                 let [ first, second ] = el.name.split('[');
                 second = second.slice(0, -1);

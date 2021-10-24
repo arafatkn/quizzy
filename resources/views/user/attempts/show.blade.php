@@ -36,8 +36,8 @@
                         <td>{{ $attempt->started_at->diffForHumans() }}</td>
                     </tr>
                     <tr>
-                        <th>Your Points</th>
-                        <td>{{ $attempt->points }}</td>
+                        <th>Your Marks</th>
+                        <td>{{ $attempt->marks }}</td>
                     </tr>
                     <tr>
                         <th>Right Answered</th>
