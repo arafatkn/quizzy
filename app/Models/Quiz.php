@@ -44,6 +44,7 @@ class Quiz extends Model
     {
         $this->questions()->delete();
         $this->attempts()->delete();
+
         return parent::delete();
     }
 
