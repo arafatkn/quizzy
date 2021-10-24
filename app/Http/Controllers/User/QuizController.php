@@ -40,7 +40,7 @@ class QuizController extends Controller
     /**
      * Show a quiz details.
      *
-     * @param Quiz  $quiz
+     * @param  Quiz  $quiz
      */
     public function show(Quiz $quiz)
     {
@@ -78,7 +78,7 @@ class QuizController extends Controller
     }
 
     /**
-     * Add New Quiz Page
+     * Add New Quiz Page.
      */
     public function create()
     {
@@ -92,7 +92,7 @@ class QuizController extends Controller
     /**
      * Store quiz in database.
      *
-     * @param QuizStoreRequest $request
+     * @param  QuizStoreRequest  $request
      */
     public function store(QuizStoreRequest $request)
     {
@@ -135,8 +135,8 @@ class QuizController extends Controller
     /**
      * Update quiz in database.
      *
-     * @param Quiz  $quiz
-     * @param QuizStoreRequest $request
+     * @param  Quiz  $quiz
+     * @param  QuizStoreRequest  $request
      */
     public function update(Quiz $quiz, QuizStoreRequest $request)
     {
@@ -157,7 +157,7 @@ class QuizController extends Controller
     /**
      * Delete Quiz from Database.
      *
-     * @param Quiz  $quiz
+     * @param  Quiz  $quiz
      */
     public function destroy(Quiz $quiz)
     {
@@ -172,7 +172,7 @@ class QuizController extends Controller
     /**
      * List attempts of a quiz owned by logged in author/user.
      *
-     * @param Quiz  $quiz
+     * @param  Quiz  $quiz
      */
     public function attempts(Quiz $quiz)
     {
