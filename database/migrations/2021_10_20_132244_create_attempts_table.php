@@ -20,7 +20,7 @@ class CreateAttemptsTable extends Migration
             $table->json('answers')->nullable();
             $table->unsignedInteger('corrects')->default(0);
             $table->unsignedInteger('wrongs')->default(0);
-            $table->decimal('points', 8, 2)->default(0);
+            $table->decimal('marks', 8, 2)->default(0);
             $table->timestamp('started_at')->nullable();
             $table->timestamp('submitted_at')->nullable();
             $table->timestamp('examined_at')->nullable();

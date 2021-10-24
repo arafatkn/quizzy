@@ -6,7 +6,7 @@
                 <th>Quiz Title</th>
                 <th class="text-center">Corrects</th>
                 <th class="text-center">Wrongs</th>
-                <th class="text-center">Points</th>
+                <th class="text-center">Marks</th>
                 <th></th>
             </tr>
         </thead>
@@ -19,7 +19,7 @@
                 </td>
                 <td class="text-center">{{ $attempt->corrects }}</td>
                 <td class="text-center">{{ $attempt->wrongs }}</td>
-                <td class="text-center">{{ $attempt->points }}</td>
+                <td class="text-center">{{ $attempt->marks }}</td>
                 <td class="text-end">
                     <div class="btn-group" role="group">
                         <a href="{{ route('user.attempts.show', $attempt->id) }}" role="button" class="btn btn-info">
