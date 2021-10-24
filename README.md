@@ -5,7 +5,7 @@
 </p>
 
 ***
-Current Version: v0.0.1
+Current Version: v0.0.3
 
 ### Technologies used so far...
 - Laravel 8 as backend framework.
