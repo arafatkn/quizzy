@@ -36,10 +36,10 @@ class AuthorDigestMail extends Mailable implements ShouldQueue
             ->with('attempts', function ($query) {
                 $query->whereDate('submitted_at', today()->subDay())
                     ->groupBy('user_id')
-                    ->selectRaw("user_id, COUNT(user_id) as attempts_count, MAX(marks) as max_marks, MIN(marks) as min_marks, AVG(marks) as avg_marks");
+                    ->selectRaw('user_id, COUNT(user_id) as attempts_count, MAX(marks) as max_marks, MIN(marks) as min_marks, AVG(marks) as avg_marks');
             });
 
-        return $this->subject("Daily Digest from ".config('app.name'))
+        return $this->subject('Daily Digest from '.config('app.name'))
             ->markdown('emails.author_digest')
             ->with([
                 'quizzes' => $quizzes,
