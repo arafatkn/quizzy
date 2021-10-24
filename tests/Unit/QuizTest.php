@@ -52,7 +52,7 @@ class QuizTest extends TestCase
     public function test_quiz_except_author_scope()
     {
         $created_quizzes = Quiz::factory()->count(10)->create([
-            'author_id' => rand(2,10),
+            'author_id' => rand(2, 10),
         ]);
 
         $quizzes = Quiz::exceptAuthor(1)->get();

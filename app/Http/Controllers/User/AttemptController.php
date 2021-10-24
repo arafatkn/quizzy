@@ -111,8 +111,8 @@ class AttemptController extends Controller
     public function running(Attempt $attempt)
     {
         //if ($attempt->started_at->addSeconds($attempt->quiz->time_limit) < now()) {
-            //$attempt->submitted_at = now();
-            //return redirect()->route('user.attempts.show', $attempt->id);
+        //$attempt->submitted_at = now();
+        //return redirect()->route('user.attempts.show', $attempt->id);
         //}
 
         $this->header();
