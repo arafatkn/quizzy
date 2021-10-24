@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\Question;
 use App\Models\Quiz;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -11,7 +12,7 @@ class QuizTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * A basic unit test example.
+     * Public Quizzes Test.
      *
      * @return void
      */
@@ -27,7 +28,41 @@ class QuizTest extends TestCase
     }
 
     /**
-     * A basic unit test example.
+     * Filtering quizzes by author test.
+     *
+     * @return void
+     */
+    public function test_quiz_of_author_scope()
+    {
+        $created_quizzes = Quiz::factory()->count(10)->create([
+            'author_id' => 1,
+        ]);
+
+        $quizzes = Quiz::ofAuthor(1)->get();
+
+        $this->assertSameSize($created_quizzes, $quizzes);
+        $this->assertEquals(1, $quizzes->random()->author_id);
+    }
+
+    /**
+     * Filtering except author test.
+     *
+     * @return void
+     */
+    public function test_quiz_except_author_scope()
+    {
+        $created_quizzes = Quiz::factory()->count(10)->create([
+            'author_id' => rand(2,10),
+        ]);
+
+        $quizzes = Quiz::exceptAuthor(1)->get();
+
+        $this->assertSameSize($created_quizzes, $quizzes);
+        $this->assertNotEquals(1, $quizzes->random()->author_id);
+    }
+
+    /**
+     * Search by string in Quiz name test.
      *
      * @return void
      */
@@ -42,5 +77,21 @@ class QuizTest extends TestCase
         });
 
         $this->assertSameSize($filtered, $quizzes);
+    }
+
+    /**
+     * Quiz delete test.
+     *
+     * @return void
+     */
+    public function test_quiz_deletion()
+    {
+        $quiz = Quiz::factory()->hasQuestions(10)->create();
+
+        $this->assertEquals(10, $quiz->questions()->count());
+
+        $quiz->delete();
+
+        $this->assertEquals(0, Question::where('quiz_id', $quiz->id)->count());
     }
 }

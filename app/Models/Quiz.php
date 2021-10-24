@@ -43,7 +43,7 @@ class Quiz extends Model
     public function delete()
     {
         $this->questions()->delete();
-        // $this->attempts()->delete();
+        $this->attempts()->delete();
         return parent::delete();
     }
 
