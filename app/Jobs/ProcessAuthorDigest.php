@@ -39,7 +39,7 @@ class ProcessAuthorDigest implements ShouldQueue
     public function handle()
     {
         // Send email
-        Mail::to( $this->quiz->author->email )
-            ->send( new AuthorDigestMail( $this->quiz, $this->quiz->attempts ) );
+        Mail::to($this->quiz->author->email)
+            ->send(new AuthorDigestMail($this->quiz, $this->quiz->attempts));
     }
 }
