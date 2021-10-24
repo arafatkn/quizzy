@@ -2,29 +2,29 @@
 
 namespace App\Mail;
 
-use App\Models\Quiz;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class AuthorDigestMail extends Mailable implements ShouldQueue
+class SignUpWelcomeMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public $quiz;
-
-    public $attempts;
+    /**
+     * @var User
+     */
+    public $user;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Quiz $quiz, $attempts)
+    public function __construct(User $user)
     {
-        $this->quiz = $quiz;
-        $this->attempts = $attempts;
+        $this->user = $user;
     }
 
     /**
@@ -34,7 +34,7 @@ class AuthorDigestMail extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->subject("Daily Digest for {$this->quiz->name}")
-            ->markdown('emails.author_digest');
+        return $this->subject('Welcome to '.config('app.name'))
+            ->markdown('emails.signup_welcome');
     }
 }

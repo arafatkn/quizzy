@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegistrationRequest;
+use App\Mail\SignUpWelcomeMail;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -46,11 +48,6 @@ class AuthController extends Controller
      */
     public function loginPost(LoginRequest $request)
     {
-        /*$request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);*/
-
         if (! auth()->attempt($request->only(['email', 'password']), $request->remember)) {
             return back()->withErrors('Email or Password is incorrect');
         }
@@ -78,6 +75,9 @@ class AuthController extends Controller
         }
 
         auth()->login($user, true);
+
+        // Send Welcome Mail
+        Mail::to($user)->send(new SignUpWelcomeMail($user));
 
         if (! empty($request->redir)) {
             $url = rawurldecode($request->redir);

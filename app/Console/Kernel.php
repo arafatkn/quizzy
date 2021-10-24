@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('send:author-digest')->dailyAt('10:00');
+        $schedule->command('php artisan queue:work --once')->everyMinute();
     }
 
     /**
