@@ -14,10 +14,18 @@ class PageController extends Controller
     {
         $this->header();
 
-        $quizzes = Quiz::public();
+        $quizzes = Quiz::public()->with(['author']);
 
         if ($request->has('search')) {
             $quizzes = $quizzes->searchBy($request->search);
+        }
+
+        if ($request->has('author_id')) {
+            $quizzes = $quizzes->ofAuthor($request->author_id);
+        }
+
+        if ($this->user) {
+            $quizzes = $quizzes->exceptAuthor($this->user->id);
         }
 
         $this->data['quizzes'] = $quizzes->latest()->paginate();

@@ -110,10 +110,10 @@ class AttemptController extends Controller
      */
     public function running(Attempt $attempt)
     {
-        if ($attempt->started_at->addSeconds($attempt->quiz->time_limit) < now()) {
+        //if ($attempt->started_at->addSeconds($attempt->quiz->time_limit) < now()) {
             //$attempt->submitted_at = now();
             //return redirect()->route('user.attempts.show', $attempt->id);
-        }
+        //}
 
         $this->header();
 
@@ -127,6 +127,27 @@ class AttemptController extends Controller
             array_keys(get_object_vars($attempt->answers)))->get();
 
         return $this->view('running');
+    }
+
+    /**
+     * Start attempting new Quiz
+     * Route = /user/quizzes/{quiz}/start.
+     */
+    public function start(Quiz $quiz)
+    {
+        $this->header();
+
+        if ($quiz->author_id == $this->user->id) {
+            return redirect()
+                ->route('user.quizzes.show', $quiz->id)
+                ->withErrors('You can not participate on your own quiz.');
+        }
+
+        $this->breadcrumbs[] = ['name' => 'Start Test', 'url' => ''];
+
+        $this->data['quiz'] = $quiz;
+
+        return $this->view('start');
     }
 
     /**
@@ -168,7 +189,6 @@ class AttemptController extends Controller
         ]);
 
         return redirect()
-            ->route('user.attempts.running', $attempt->id)
-            ->withErrors('You can not start until completing previous attempt.');
+            ->route('user.attempts.running', $attempt->id);
     }
 }

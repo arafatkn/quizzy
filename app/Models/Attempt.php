@@ -73,6 +73,7 @@ class Attempt extends Model
         $this->wrongs = $wrongs;
         $this->points = $this->corrects * $this->quiz->points_per_question;
         $this->points = is_int($this->points) ? $this->points : round($this->points, 2);
+        $this->examined_at = now();
 
         return $this->save();
     }

@@ -9,21 +9,11 @@
             <h3 class="text-center">Available Quizzes</h3>
         </div>
         <div class="card-body p-0 m-0">
-            <div class="table-responsive">
-                <table class="table table-striped align-middle mb-0">
-                    <tbody>
-                    @foreach($quizzes as $quiz)
-                        <tr>
-                            <td>{{ $quiz->name }}</td>
-                            <td>{{ intdiv($quiz->time_limit, 60) }} Min {{ $quiz->time_limit%60 ? ($quiz->time_limit%60).' sec' : '' }}</td>
-                            <td class="text-end">
-                                <a href="{{ route('user.index') }}" role="button" class="btn btn-secondary">Start Test</a>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
+            <x-user.quiz-list :quizzes="$quizzes" />
+
+            @if($quizzes->hasPages())
+                <div class="m-4 d-flex justify-content-center text-center">{{ $quizzes->links() }}</div>
+            @endif
         </div>
         @guest
         <div class="card-footer text-center">

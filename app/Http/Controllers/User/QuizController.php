@@ -17,7 +17,6 @@ class QuizController extends Controller
 
     /**
      * All available quiz list.
-     * Route = /user/quizzes.
      */
     public function index(Request $request)
     {
@@ -40,7 +39,8 @@ class QuizController extends Controller
 
     /**
      * Show a quiz details.
-     * Route = /user/quizzes/{quiz}.
+     *
+     * @param Quiz  $quiz
      */
     public function show(Quiz $quiz)
     {
@@ -60,7 +60,6 @@ class QuizController extends Controller
 
     /**
      * Quizzes created by current logged-in users.
-     * Route = /user/my-quizzes.
      */
     public function myQuizzes(Request $request)
     {
@@ -73,35 +72,13 @@ class QuizController extends Controller
             $quizzes = $quizzes->searchBy($request->search);
         }
 
-        $this->data['quizzes'] = $quizzes->withCount(['questions'])->latest()->paginate();
+        $this->data['quizzes'] = $quizzes->withCount(['questions', 'attempts'])->latest()->paginate();
 
         return $this->view('my_quizzes');
     }
 
     /**
-     * Start attempting new Quiz
-     * Route = /user/quizzes/{quiz}/start.
-     */
-    public function start(Quiz $quiz)
-    {
-        $this->header();
-
-        if ($quiz->author_id == $this->user->id) {
-            return redirect()
-                ->route('user.quizzes.show', $quiz->id)
-                ->withErrors('You can not participate on your own quiz.');
-        }
-
-        $this->breadcrumbs[] = ['name' => 'Start Test', 'url' => ''];
-
-        $this->data['quiz'] = $quiz;
-
-        return $this->view('start');
-    }
-
-    /**
      * Add New Quiz Page
-     * Route = /user/quizzes/create.
      */
     public function create()
     {
@@ -114,8 +91,8 @@ class QuizController extends Controller
 
     /**
      * Store quiz in database.
-     * Route = /user/quizzes
-     * Method = POST.
+     *
+     * @param QuizStoreRequest $request
      */
     public function store(QuizStoreRequest $request)
     {
@@ -136,8 +113,9 @@ class QuizController extends Controller
     }
 
     /**
-     * Edit Quiz Page
-     * Route = /user/quizzes/{quiz}/edit.
+     * Edit Quiz Page.
+     *
+     * @param  Quiz  $quiz
      */
     public function edit(Quiz $quiz)
     {
@@ -156,8 +134,9 @@ class QuizController extends Controller
 
     /**
      * Update quiz in database.
-     * Route = /user/quizzes/{quiz}
-     * Method = PUT / PATCH.
+     *
+     * @param Quiz  $quiz
+     * @param QuizStoreRequest $request
      */
     public function update(Quiz $quiz, QuizStoreRequest $request)
     {
@@ -176,9 +155,9 @@ class QuizController extends Controller
     }
 
     /**
-     * Delete Quiz from Database
-     * Route = /user/quizzes/{quiz}
-     * Method = DELETE.
+     * Delete Quiz from Database.
+     *
+     * @param Quiz  $quiz
      */
     public function destroy(Quiz $quiz)
     {
@@ -188,5 +167,27 @@ class QuizController extends Controller
         }
 
         return back()->withErrors('Something is wrong here... Please try again later.');
+    }
+
+    /**
+     * List attempts of a quiz owned by logged in author/user.
+     *
+     * @param Quiz  $quiz
+     */
+    public function attempts(Quiz $quiz)
+    {
+        if (auth()->user()->id != $quiz->author_id) {
+            abort(404);
+        }
+
+        $this->header();
+        $this->breadcrumbs[] = ['name' => 'My Quizzes', 'url' => route('user.my_quizzes')];
+        $this->breadcrumbs[] = ['name' => 'Details', 'url' => route('user.quizzes.show', $quiz->id)];
+        $this->breadcrumbs[] = ['name' => 'Attempts', 'url' => ''];
+
+        $this->data['quiz'] = $quiz;
+        $this->data['attempts'] = $quiz->attempts()->latest()->paginate();
+
+        return $this->view('attempts');
     }
 }

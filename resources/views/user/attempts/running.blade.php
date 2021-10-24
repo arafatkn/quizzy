@@ -29,11 +29,19 @@
             <button class="btn btn-primary" @click="saveProgress">
                 <i class="bi bi-save-fill"></i>
                 <span class="d-none d-sm-inline-block">Save Progress</span>
-            </a>
+            </button>
         </div>
         <div class="card-body">
 
-            <div class="card">
+            <nav aria-label="Questions Navigation">
+                <ul class="pagination" style="overflow-x: scroll;" id="qNav">
+                    <li class="page-item bg-info" v-for="i in questions.length" :class="(current_index === i-1? 'active' : '')">
+                        <a @click="goToQuestion(i-1)" class="page-link" href="javascript:void(0)">@{{ i }}</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="card" id="qCard">
                 <div class="card-header">
                     @{{ question.question }}
                 </div>
@@ -54,7 +62,7 @@
 
             <div class="text-center mt-3">
                 <button @click="goPreviousQuestion" class="btn btn-secondary btn-lg px-5 mb-3" :disabled="current_index <= 0">&larr; Previous</button>
-                <button @click="goNextQuestion" class="btn btn-success btn-lg px-5 mb-3">Next Question &rarr;</button>
+                <button @click="goNextQuestion" class="btn btn-success btn-lg px-5 mb-3" :disabled="current_index+1 >= questions.length">Next Question &rarr;</button>
             </div>
         </div>
     </div>
@@ -65,6 +73,14 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
+
+        window.onresize = setQuestionNavigationWidth;
+
+        function setQuestionNavigationWidth() {
+            document.getElementById("qNav").style.width = document.getElementById("qCard").clientWidth + "px";
+        }
+
+        setQuestionNavigationWidth();
 
         let answers = @json($attempt->answers);
         let questions = @json($questions);
@@ -90,6 +106,10 @@
 
                 goPreviousQuestion() {
                     this.current_index --;
+                },
+
+                goToQuestion(i) {
+                    this.current_index = i;
                 },
 
                 updateAnswer(qid, ans) {

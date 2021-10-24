@@ -51,6 +51,7 @@
                     <tr>
                         <th></th>
                         <td>
+                            <a href="{{ route('user.quizzes.attempts', $quiz->id) }}" role="button" class="btn btn-info"><i class="bi bi-eye-fill"></i> View Attempts</a>
                             <a href="{{ route('user.quizzes.edit', $quiz->id) }}" role="button" class="btn btn-warning"><i class="bi bi-pencil-square"></i> Edit</a>
                             <button onclick="gdConfirm('{{ route('user.quizzes.destroy', $quiz->id) }}')" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#GDModal"><i class="bi bi-trash-fill"></i> Delete</button>
                         </td>
