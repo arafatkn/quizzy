@@ -46,8 +46,7 @@ class SendAuthorDigest extends Command
 
         foreach ($users as $user) {
             // ProcessAuthorDigest::dispatch($user);
-            Mail::to($user->email)
-                ->send(new AuthorDigestMail($user));
+            Mail::to($user)->send(new AuthorDigestMail($user));
         }
 
         return Command::SUCCESS;

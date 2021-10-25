@@ -1,20 +1,31 @@
 @component('mail::message')
-    # Daily Digest
 
-    Hi {{ strstr($user->name, ' ', true) }},
-    Here is your digest of yesterday.
+Hi {{ strstr($user->name, ' ', true) }},
 
-    @foreach ($quizzes as $quiz)
-        ## {{ $quiz->name }}
-        @if ($quiz->attempts)
-            @foreach ($quiz->attempts as $attempt)
-                ### By {{ \App\Models\User::find($attempt->user_id)->name }}, Attempted: {{ $attempt->attempts_count }} times, Max: {{ $attempt->max_marks }}, Min: {{ $attempt->min_marks }}, Avg: {{ $attempt->avg_marks }}
-            @endforeach
-        @else
-            ### No Attempts
-        @endif
-    @endforeach
+Here is your digest of yesterday {{ today()->subDay()->format('F j, Y') }}.
 
-    Thanks,<br>
-    {{ config('app.name') }}
+@foreach ($quizzes as $quiz)
+
+@component('mail::panel')
+**Quiz Title: *{{ $quiz->name }}***
+
+@if (count($quiz->attempts) == 0)
+No Attempts Yesterday
+@endif
+@endcomponent
+
+@if (count($quiz->attempts) > 0)
+@component('mail::table')
+| User             | Attempted        | Max Marks    | Min Marks        | Average          |
+| ---------------- |:----------------:|:------------:|:----------------:|:----------------:|
+@foreach ($quiz->attempts as $attempt)
+| {{ $attempt->user->name }} | {{ $attempt->attempts_count }} | {{ round($attempt->max_marks, 2) }} | {{ round($attempt->min_marks, 2) }} | {{ round($attempt->avg_marks, 2) }} |
+@endforeach
+@endcomponent
+@endif
+
+@endforeach
+
+Thanks,<br>
+{{ config('app.name') }}
 @endcomponent
