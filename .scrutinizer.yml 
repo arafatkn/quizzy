@@ -1,0 +1,28 @@
+build:
+    environment:
+        php:
+            version: 7.4
+    tests:
+        override:
+            - command: vendor/bin/phpunit
+    nodes:
+        analysis:
+            tests:
+                override:
+                    - php-scrutinizer-run
+filter:
+    paths:
+        - 'app/*'
+        - 'tests/*'
+    excluded_paths:
+        - '*.min.js'
+        - '*.min.css'
+        - 'public/*'
+checks:
+    php: true
+    javascript: true
+coding_style:
+    php:
+        spaces:
+            before_parentheses:
+                closure_definition: true
