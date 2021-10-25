@@ -32,12 +32,12 @@ Route::resource('/quizzes', QuizController::class);
 Route::resource('/questions', QuestionController::class)->only(['store', 'update', 'destroy']);
 
 Route::group(
-    [ 'prefix' => 'settings', 'as' => 'settings.' ],
+    ['prefix' => 'settings', 'as' => 'settings.'],
     function () {
-        Route::get('/password', [ SettingController::class, 'password' ])->name('password');
-        Route::post('/password', [ SettingController::class, 'passwordPost' ]);
+        Route::get('/password', [SettingController::class, 'password'])->name('password');
+        Route::post('/password', [SettingController::class, 'passwordPost']);
 
-        Route::get('/profile', [ SettingController::class, 'profile' ])->name('profile');
-        Route::post('/profile', [ SettingController::class, 'profilePost' ]);
+        Route::get('/profile', [SettingController::class, 'profile'])->name('profile');
+        Route::post('/profile', [SettingController::class, 'profilePost']);
     }
 );
