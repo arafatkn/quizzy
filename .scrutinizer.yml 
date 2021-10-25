@@ -5,6 +5,11 @@ build:
     tests:
         override:
             - command: vendor/bin/phpunit
+    nodes:
+        analysis:
+            tests:
+                override:
+                    - php-scrutinizer-run
 filter:
     paths:
         - 'app/*'
