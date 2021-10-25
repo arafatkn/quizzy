@@ -13,6 +13,7 @@ build:
 filter:
     paths:
         - 'app/*'
+        - 'tests/*'
     excluded_paths:
         - '*.min.js'
         - '*.min.css'
@@ -21,4 +22,7 @@ checks:
     php: true
     javascript: true
 coding_style:
-    php: {  }
+    php:
+        spaces:
+            before_parentheses:
+                closure_definition: true
