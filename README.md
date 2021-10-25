@@ -5,13 +5,27 @@
 </p>
 
 ***
-Current Version: v0.0.4
+Current Version: v0.0.5
 
 ### Technologies used so far...
-- Laravel 8 as backend framework.
-- PHPUnit for Testing.
-- Bootstrap 5 for Frontend.
-- VueJS and Axios in Quiz Attempt Page.
+#### Frameworks, Libraries, Packages etc...
+- [Laravel 8](https://laravel.com) as backend framework.
+- MySQL as database.
+- Redis for cache & queue.
+- [PHPUnit](https://phpunit.de/) for Testing.
+- [Bootstrap 5](https://getbootstrap.com/docs/5.0/getting-started/introduction/) for Frontend.
+- [VueJS](https://vuejs.org/) and [Axios](https://axios-http.com/) in Quiz Attempt Page.
+- [Laravel Horizon](https://laravel.com/docs/master/horizon)
+- [Laravel Debugbar](https://github.com/barryvdh/laravel-debugbar)
+- [Laravel Valet](https://laravel.com/docs/master/valet) for local development.
+- [Laravel Settings](https://packagist.org/packages/arafatkn/laravel-settings) by Me
+- [Predis](https://github.com/predis/predis) for redis connection.
+- [Sentry](https://sentry.io/) for error tracking.
+- [Faker](https://fakerphp.github.io/) for generating fake data in testing.
+
+### Followed Standards
+* PSR-4 Autoloading Standard.
+* PSR-2 Coding Standard.
 
 ### Live Demo
 **[Live Demo Link](https://quizzy.arafatkn.com)**
