@@ -1,0 +1,19 @@
+build:
+    environment:
+        php:
+            version: 7.4
+    tests:
+        override:
+            - command: vendor/bin/phpunit
+filter:
+    paths:
+        - 'app/*'
+    excluded_paths:
+        - '*.min.js'
+        - '*.min.css'
+        - 'public/*'
+checks:
+    php: true
+    javascript: true
+coding_style:
+    php: {  }
