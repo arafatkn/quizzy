@@ -13,7 +13,7 @@
                         <a class="nav-link active" aria-current="page" href="{{ config('app.url') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Quizzes</a>
+                        <a class="nav-link" href="{{ route('index') }}">Quizzes</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">About</a>
