@@ -6,7 +6,7 @@
 [![Build Status](https://scrutinizer-ci.com/g/arafatkn/quizzy/badges/build.png)](https://scrutinizer-ci.com/g/arafatkn/quizzy/build-status/)
 
 ***
-Current Version: v0.0.5
+Current Version: v0.1.1
 
 ### Technologies used so far...
 #### Frameworks, Libraries, Packages etc...
