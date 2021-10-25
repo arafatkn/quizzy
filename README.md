@@ -1,8 +1,9 @@
 ## Quizzy - Online Quiz System
 
-<p align="center">
-    <img src="https://github.styleci.io/repos/414869056/shield?style=flat" alt="StyleCI" />
-</p>
+
+![StyleCI Status](https://github.styleci.io/repos/414869056/shield?style=flat "StyleCI")
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/arafatkn/quizzy/badges/quality-score.png)](https://scrutinizer-ci.com/g/arafatkn/quizzy/)
+[![Build Status](https://scrutinizer-ci.com/g/arafatkn/quizzy/badges/build.png)](https://scrutinizer-ci.com/g/arafatkn/quizzy/build-status/)
 
 ***
 Current Version: v0.0.5
