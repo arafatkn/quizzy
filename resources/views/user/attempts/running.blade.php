@@ -76,8 +76,8 @@
 @endsection
 
 @section('script')
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="{{ asset('/js/vue@2.6.14.min.js') }}"></script>
+{{--    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>--}}
 
     <script>
 
