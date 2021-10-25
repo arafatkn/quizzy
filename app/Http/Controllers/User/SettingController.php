@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->setView('settings');
         $this->setRoute('settings');
-        $this->breadcrumbs[] = ['name' => 'Settings', 'url' => route('user.index'),];
+        $this->breadcrumbs[] = ['name' => 'Settings', 'url' => route('user.index')];
     }
 
     /**
@@ -85,5 +85,4 @@ class SettingController extends Controller
 
         return back()->withErrors('Something is wrong here');
     }
-
 }
