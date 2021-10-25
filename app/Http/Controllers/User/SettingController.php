@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Notifications\User\PasswordChanged;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
@@ -42,7 +43,7 @@ class SettingController extends Controller
         if ($hasher->check($request->current_password, $this->user->password)) {
             $this->user->password = bcrypt($request->new_password);
             if ($this->user->save()) {
-                // $this->user->notify(new PasswordChanged());
+                $this->user->notify(new PasswordChanged());
                 auth()->logout();
 
                 return redirect()->route('auth.login')->withErrors('Password has been successfully changed. You need to login again with new password');
