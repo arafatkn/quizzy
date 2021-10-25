@@ -13,7 +13,7 @@
                         <a class="nav-link active" aria-current="page" href="{{ config('app.url') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Quizzes</a>
+                        <a class="nav-link" href="{{ route('index') }}">Quizzes</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">About</a>
@@ -32,7 +32,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a href="{{ route('user.index') }}" class="dropdown-item"><i class="bi bi-speedometer"></i> Dashboard</a></li>
-                            <li><a href="#" class="dropdown-item"><i class="bi bi-lock-fill"></i> Change Password</a></li>
+                            <li><a href="{{ route('user.settings.password') }}" class="dropdown-item"><i class="bi bi-lock-fill"></i> Change Password</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

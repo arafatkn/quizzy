@@ -33,10 +33,17 @@
         </div>
         <div class="card-body">
 
-            <nav aria-label="Questions Navigation">
+            <nav v-if="questions.length > 0" aria-label="Questions Navigation">
                 <ul class="pagination" style="overflow-x: scroll;" id="qNav">
-                    <li class="page-item bg-info" v-for="i in questions.length" :class="(current_index === i-1? 'active' : '')">
-                        <a @click="goToQuestion(i-1)" class="page-link" href="javascript:void(0)">@{{ i }}</a>
+                    <li class="page-item" v-for="i in questions.length" :class="(current_index === i-1? 'active' : '')">
+                        <a
+                            :class="(answers[questions[i-1].id] && current_index !== i-1) ? 'bg-success text-white' : ''"
+                            @click="goToQuestion(i-1)"
+                            class="page-link"
+                            href="javascript:void(0)"
+                        >
+                            @{{ i }}
+                        </a>
                     </li>
                 </ul>
             </nav>
@@ -69,8 +76,8 @@
 @endsection
 
 @section('script')
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="{{ asset('/js/vue@2.6.14.min.js') }}"></script>
+{{--    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>--}}
 
     <script>
 

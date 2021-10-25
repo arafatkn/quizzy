@@ -4,6 +4,7 @@ use App\Http\Controllers\User\AttemptController;
 use App\Http\Controllers\User\PageController;
 use App\Http\Controllers\User\QuestionController;
 use App\Http\Controllers\User\QuizController;
+use App\Http\Controllers\User\SettingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,3 +30,14 @@ Route::get('/quizzes/attempts/{attempt}/running', [AttemptController::class, 'ru
 Route::resource('/quizzes/attempts', AttemptController::class)->only(['index', 'show', 'update']);
 Route::resource('/quizzes', QuizController::class);
 Route::resource('/questions', QuestionController::class)->only(['store', 'update', 'destroy']);
+
+Route::group(
+    ['prefix' => 'settings', 'as' => 'settings.'],
+    function () {
+        Route::get('/password', [SettingController::class, 'password'])->name('password');
+        Route::post('/password', [SettingController::class, 'passwordPost']);
+
+        Route::get('/profile', [SettingController::class, 'profile'])->name('profile');
+        Route::post('/profile', [SettingController::class, 'profilePost']);
+    }
+);
