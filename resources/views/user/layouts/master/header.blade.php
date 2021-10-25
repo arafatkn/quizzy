@@ -18,11 +18,23 @@
         </li>
         <li>
             <a href="{{ route('user.my_quizzes') }}" class="nav-link px-0 align-middle">
-                <i class="fs-4 bi-person"></i> <span class="ms-1 d-none d-sm-inline">My Quizzes</span> </a>
+                <i class="fs-4 bi-person-check"></i> <span class="ms-1 d-none d-sm-inline">My Quizzes</span> </a>
         </li>
         <li>
             <a href="{{ route('user.attempts.index') }}" class="nav-link px-0 align-middle">
                 <i class="fs-4 bi-hand-index"></i> <span class="ms-1 d-none d-sm-inline">My Attempts</span> </a>
+        </li>
+        <li>
+            <a href="{{ route('user.settings.profile') }}" class="nav-link px-0 align-middle">
+                <i class="fs-4 bi-person"></i> <span class="ms-1 d-none d-sm-inline">My Profile</span> </a>
+        </li>
+        <li>
+            <a href="{{ route('user.settings.password') }}" class="nav-link px-0 align-middle">
+                <i class="fs-4 bi-gear"></i> <span class="ms-1 d-none d-sm-inline">Chnage Password</span> </a>
+        </li>
+        <li>
+            <a href="{{ route('auth.logout') }}" class="nav-link px-0 align-middle">
+                <i class="fs-4 bi-box-arrow-right"></i> <span class="ms-1 d-none d-sm-inline">Logout</span> </a>
         </li>
     </ul>
 </div>

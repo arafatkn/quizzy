@@ -32,7 +32,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a href="{{ route('user.index') }}" class="dropdown-item"><i class="bi bi-speedometer"></i> Dashboard</a></li>
-                            <li><a href="#" class="dropdown-item"><i class="bi bi-lock-fill"></i> Change Password</a></li>
+                            <li><a href="{{ route('user.settings.password') }}" class="dropdown-item"><i class="bi bi-lock-fill"></i> Change Password</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
