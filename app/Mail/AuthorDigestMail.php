@@ -28,6 +28,8 @@ class AuthorDigestMail extends Mailable implements ShouldQueue
      * Build the message.
      *
      * @return $this
+     *
+     * @throws \Exception
      */
     public function build()
     {
@@ -35,13 +37,18 @@ class AuthorDigestMail extends Mailable implements ShouldQueue
             ->where('author_digest', 1)
             ->with('attempts', function ($query) {
                 $query->whereDate('submitted_at', today()->subDay())
-                    ->groupBy('user_id')
-                    ->selectRaw('user_id, COUNT(user_id) as attempts_count, MAX(marks) as max_marks, MIN(marks) as min_marks, AVG(marks) as avg_marks');
-            });
+                    ->groupByRaw('quiz_id, user_id')
+                    ->with('user')
+                    ->selectRaw('`quiz_id`, `user_id`, COUNT(`user_id`) as attempts_count, MAX(`marks`) as `max_marks`, MIN(`marks`) as min_marks, AVG(`marks`) as avg_marks');
+            })
+            ->get();
+
+        if (empty($quizzes)) {
+            throw new \Exception();
+        }
 
         return $this->subject('Daily Digest from '.config('app.name'))
-            ->markdown('emails.author_digest')
-            ->with([
+            ->markdown('emails.author_digest', [
                 'quizzes' => $quizzes,
             ]);
     }
